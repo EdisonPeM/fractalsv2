@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+  color: #333;
+}
+
+.container {
+  text-align: center;
+
+  min-height: 100vh;
+  padding: 1em;
+
+  background: #c9f7f7;
+}
+
+.canva-container {
+  display: grid;
+  grid-template-columns: minmax(auto, 500px) auto;
+  justify-content: center;
+}
+
+.copyright {
+  padding-top: 2em;
+  padding-bottom: 1em;
+}
+
+@media (min-width: 768px) {
+  .description {
+    font-size: 1.2em;
+  }
+
+  .content {
+    width: 80%;
+    margin: auto;
+  }
+}

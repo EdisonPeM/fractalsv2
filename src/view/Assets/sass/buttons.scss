@@ -1,0 +1,52 @@
+.btn {
+  font-size: 1em;
+  color: white;
+  background-color: hsl(229, 77%, 55%);
+  vertical-align: top;
+
+  padding: 1em;
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
+  outline: none;
+
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: hsl(229, 90%, 45%);
+}
+
+.btn:active {
+  background-color: hsl(229, 90%, 35%);
+}
+
+.btn:focus,
+input[type='range']:focus {
+  outline: 1px solid hsl(229, 90%, 55%);
+  outline-offset: 2px;
+}
+
+.btn-random {
+  background-color: hsl(39, 90%, 55%);
+}
+
+.btn-random:hover {
+  background-color: hsl(39, 90%, 45%);
+}
+
+.btn-random:active {
+  background-color: hsl(39, 90%, 35%);
+}
+
+.btn-colors {
+  background-color: hsl(118, 80%, 50%);
+}
+
+.btn-colors:hover {
+  background-color: hsl(118, 80%, 40%);
+}
+
+.btn-colors:active {
+  background-color: hsl(118, 80%, 30%);
+}

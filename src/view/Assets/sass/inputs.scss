@@ -1,0 +1,88 @@
+.output {
+  font-size: 1.5em;
+}
+
+.range input {
+  width: 100%;
+}
+
+.range {
+  position: relative;
+}
+
+.vertical-range {
+  padding-left: 1.5em;
+}
+
+.range input {
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.vertical-range input {
+  margin: 0;
+  position: absolute;
+  transform: rotate(-90deg) translate(-100%, -100%);
+  transform-origin: top left;
+}
+
+.range::after {
+  content: attr(data-max);
+}
+
+.range::before {
+  content: attr(data-min);
+}
+
+.range::after,
+.range::before {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.range:hover::after,
+.range:hover::before {
+  opacity: 1;
+}
+
+.vertical-range::before {
+  bottom: 0;
+}
+
+.vertical-range::after,
+.vertical-range::before {
+  left: 0;
+}
+
+.vertical-range::after {
+  top: -1em;
+}
+
+.vertical-range::before {
+  bottom: -1.5em;
+}
+
+.range:not(.vertical-range)::after {
+  top: -0.5em;
+  right: 0;
+}
+
+.range:not(.vertical-range)::before {
+  top: -0.5em;
+}
+
+@media (min-width: 768px) {
+  .vertical-range::after {
+    top: 0;
+  }
+
+  .vertical-range::before {
+    bottom: 0;
+  }
+
+  .vertical-range::after,
+  .vertical-range::before {
+    left: 2em;
+  }
+}

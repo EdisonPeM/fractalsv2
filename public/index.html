@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Fractals</title>
+  <link rel="shortcut icon" href="favicon.png" type="image/png" />
+
+  <!-- Add Font-awesome font -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css"
+    integrity="sha256-6gh97D4atgoM/BfYzrI30gdueoctVdAOksrGFaq0NIk=" crossorigin="anonymous" />
+</head>
+
+<body>
+  <main class="container">
+    <div class="content">
+      <h1>FRACTALES DEL CONJUNTO DE JULIA</h1>
+      <div class="description">
+        <p>
+          Los Conjuntos de Julia, propuestos por matemático Gaston
+          Julia, son una familia de
+          <u>conjuntos fractales</u> que se obtienen al estudiar
+          el comportamiento de los
+          <strong>números complejos</strong> cuando son iterados
+          por una función <strong>F<sub>c</sub>(z)</strong>, El
+          Conjunto de Julia asociado a la función
+          <strong>F</strong>
+          está formado por
+          <em>todos los puntos <strong>z</strong> del plano
+            complejo</em>
+          para los cuales las iteradas de la función en dichos
+          puntos constituyen una sucesión no divergente.
+        </p>
+        <p>
+          El conjunto de Mandelbrot, por otro lado, es el conjunto
+          de números complejos para los cuales la función
+          <strong>F<sub>c</sub>(z)</strong> no diverge al ser
+          iterada al rededor de <strong>z<sub>0</sub>=0</strong>.
+          Este Conjunto está formado por
+          <em>todos los puntos <strong>c</strong> del plano
+            complejo</em>
+          para los cuales las iteradas de la función en dichos
+          puntos constituyen una sucesión no divergente.
+        </p>
+        <p>
+          Para esta aplicación, se utilizará la función cuadrática
+          <strong>F<sub>c</sub>(z) = z<sup>2</sup> + c</strong>,
+          donde deberá asignarle un valor al parametro
+          <em><strong>c</strong></em> usando los deslizadores.
+        </p>
+      </div>
+      <hr />
+      <div id="app"></div>
+      <hr />
+      <footer class="copyright">
+        Copyright @ 2020 - Created by Edison Peñuela
+      </footer>
+    </div>
+  </main>
+</body>
+
+</html>

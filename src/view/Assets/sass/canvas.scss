@@ -1,0 +1,48 @@
+.canva {
+  position: relative;
+
+  canvas {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    background-color: #fff;
+    box-shadow: 0 0 5px #0003;
+  }
+}
+
+.spinner {
+  background-color: #0005;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Wait spinner */
+.loader {
+  border-radius: 50%;
+  width: 5em;
+  height: 5em;
+
+  border: 0.8em solid rgba(255, 255, 255, 0.2);
+  border-top-color: #ffffff;
+
+  animation: loading 800ms infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
