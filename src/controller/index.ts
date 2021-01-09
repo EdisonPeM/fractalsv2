@@ -1,11 +1,12 @@
 import { FRACTALS } from '@Constants';
-import { addZoomListeners } from './zoomController';
+import { addZoomListeners, getZoomLevels } from './zoomController';
 import { addInputsListeners, changeAxis } from './fractalController';
 
 import { blockView, unBlockView } from '@View';
 import { parm_a, parm_b } from '@View/Elements/inputs';
 
 import { draw, onDone } from '@Model';
+import { showZoomLevel } from '@View/Elements/zoomControls';
 
 // Handler of Fractal mode
 let currentFractal = FRACTALS.MANDELBROT;
@@ -35,6 +36,9 @@ export function addListeners() {
 }
 
 export function runDraw() {
+  const zoomLevels = getZoomLevels();
+  showZoomLevel(zoomLevels[currentFractal]);
+
   const c: complex = {
     real: parm_a.valueAsNumber,
     img: parm_b.valueAsNumber,

@@ -19,7 +19,24 @@ import {
 import { onClick } from './listeners';
 
 let zoomOp: ZOOM_OPS = ZOOM_OPS.NONE;
+function setZoomOp(op: ZOOM_OPS) {
+  if (zoomOp === op) {
+    restartZoomOp();
+  } else {
+    zoomOp = op;
+  }
+}
 
+let zoomLevels = {
+  [FRACTALS.MANDELBROT]: 1,
+  [FRACTALS.JULIA]: 1,
+};
+export function getZoomLevels() {
+  return zoomLevels;
+}
+
+let zoomInAction = false;
+let zoomOutAction = false;
 export function addZoomListeners() {
   onClick(myCanva, (ev: MouseEvent) => {
     if (zoomOp !== ZOOM_OPS.NONE) {
@@ -33,37 +50,44 @@ export function addZoomListeners() {
     }
   });
 
-  onClick(zoomIn, () => {
-    if (zoomOp === ZOOM_OPS.ZOOM_IN) {
-      restartZoomOp();
-    } else {
-      zoomOp = ZOOM_OPS.ZOOM_IN;
-    }
-  });
-
-  onClick(zoomOut, () => {
-    if (zoomOp === ZOOM_OPS.ZOOM_OUT) {
-      restartZoomOp();
-    } else {
-      zoomOp = ZOOM_OPS.ZOOM_OUT;
-    }
-  });
-
-  onClick(zoomPosition, () => {
-    if (zoomOp === ZOOM_OPS.MOVE_POSITION) {
-      restartZoomOp();
-    } else {
-      zoomOp = ZOOM_OPS.MOVE_POSITION;
-    }
-  });
-
+  onClick(zoomIn, () => setZoomOp(ZOOM_OPS.ZOOM_IN));
+  onClick(zoomOut, () => setZoomOp(ZOOM_OPS.ZOOM_OUT));
+  onClick(zoomPosition, () => setZoomOp(ZOOM_OPS.MOVE_POSITION));
   onClick(zoomHome, () => {
     zoomOp = ZOOM_OPS.HOME;
     changeZoom({ x: 0, y: 0 });
   });
+
+  // Add event on KeyPress
+  document.addEventListener('keydown', e => {
+    if (e.code === 'ControlLeft' || e.code === 'ControlRight') {
+      zoomInAction = true;
+    }
+
+    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+      zoomOutAction = true;
+    }
+
+    if (zoomInAction && !zoomOutAction) setZoomOp(ZOOM_OPS.ZOOM_IN);
+    if (!zoomInAction && zoomOutAction) setZoomOp(ZOOM_OPS.ZOOM_OUT);
+    if (zoomInAction && zoomOutAction) setZoomOp(ZOOM_OPS.MOVE_POSITION);
+  });
+
+  document.addEventListener('keyup', e => {
+    if (e.code === 'ControlLeft' || e.code === 'ControlRight') {
+      zoomInAction = false;
+    }
+    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+      zoomOutAction = false;
+    }
+
+    if (!zoomInAction && !zoomOutAction) setZoomOp(ZOOM_OPS.NONE);
+  });
 }
 
 function changeZoom(center: coord) {
+  changeZoomLevel();
+
   const c: complex = {
     real: parm_a.valueAsNumber,
     img: parm_b.valueAsNumber,
@@ -92,4 +116,30 @@ function restartZoomOp() {
   // Restart Mode and Styles
   zoomOp = ZOOM_OPS.NONE;
   activeZoomControl();
+}
+
+function changeZoomLevel() {
+  const currentFractal = getCurrentFractal();
+  switch (zoomOp) {
+    case ZOOM_OPS.ZOOM_IN: {
+      zoomLevels[currentFractal]++;
+      if (zoomLevels[currentFractal] === 0) {
+        zoomLevels[currentFractal]++;
+      }
+      break;
+    }
+
+    case ZOOM_OPS.ZOOM_OUT: {
+      zoomLevels[currentFractal]--;
+      if (zoomLevels[currentFractal] === 0) {
+        zoomLevels[currentFractal]--;
+      }
+      break;
+    }
+
+    case ZOOM_OPS.HOME: {
+      zoomLevels[currentFractal] = 1;
+      break;
+    }
+  }
 }

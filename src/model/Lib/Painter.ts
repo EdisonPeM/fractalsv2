@@ -20,7 +20,6 @@ class Painter {
   saveInCache() {
     const { width, height } = this.canvas;
     this.paintedFractal = this.ctx.getImageData(0, 0, width, height);
-    this.firm();
   }
 
   drawAxis(posX: number, posY: number, Dx: number, Dy: number) {
@@ -41,8 +40,6 @@ class Painter {
     this.ctx.fillStyle = 'white';
     this.ctx.fillRect(posAxis.x, 0, 1, height);
     this.ctx.fillRect(0, posAxis.y, width, 1);
-
-    this.firm();
   }
 
   firm() {
