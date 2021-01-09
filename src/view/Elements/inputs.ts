@@ -65,3 +65,20 @@ parm_b.addEventListener('change', updateLabelParam_b);
 
 updateLabelParam_a();
 updateLabelParam_b();
+
+// Restart Values after Zoom Operations
+export function updateParam_a(value: number, limits: [number, number]) {
+  parm_a.value = value.toFixed(3);
+  parm_a.min = limits[0].toFixed(3);
+  parm_a.max = limits[1].toFixed(3);
+  updateLabelParam_a();
+  updateOutput();
+}
+
+export function updateParam_b(value: number, limits: [number, number]) {
+  parm_b.value = value.toFixed(3);
+  parm_b.min = limits[0].toFixed(3);
+  parm_b.max = limits[1].toFixed(3);
+  updateLabelParam_b();
+  updateOutput();
+}

@@ -47,11 +47,9 @@ class Painter {
 
   firm() {
     const firmText = 'https://fractalsv2.vercel.app/';
-    const { height } = this.canvas;
-
     this.ctx.fillStyle = '#fff';
     this.ctx.font = '20px sans-serif';
-    this.ctx.fillText(firmText, 10, height - 10);
+    this.ctx.fillText(firmText, 10, 20);
   }
 }
 

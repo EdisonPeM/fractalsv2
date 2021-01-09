@@ -9,3 +9,10 @@ export const Button = (textContent: string) => {
 
   return button;
 };
+
+export const controlButton = () => {
+  const button = e('button');
+  button.className = 'control';
+
+  return button;
+};

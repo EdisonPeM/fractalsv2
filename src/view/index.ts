@@ -4,7 +4,7 @@ import {
   output,
   container_parm_a,
   container_parm_b,
-  disabledInputs,
+  // disabledInputs,
 } from './Elements/inputs';
 import { runBtns } from './Elements/runButtons';
 import { canvaDiv, showSpinner } from './Elements/canvas';
@@ -34,11 +34,6 @@ export function initView() {
   App?.append(hideAxisWrap);
   App?.append(e('br'));
   App?.append(downloadBtn);
-
-  // IS NECESARY ??
-  // const helperText = e('div');
-  // helperText.innerHTML = `<br/><small>Para descargar la imagen haga <b>click derecho</b> sobre el fractal y luego <b>Guardar Imagen Cómo</b></small>`;
-  // App?.append(helperText);
 }
 
 export function blockView() {

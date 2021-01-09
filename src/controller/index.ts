@@ -1,43 +1,28 @@
-import { onChange, onClick, onInput } from './listeners';
+import { FRACTALS } from '@Constants';
+import { addZoomListeners } from './zoomController';
+import { addInputsListeners, changeAxis } from './fractalController';
 
 import { blockView, unBlockView } from '@View';
-import { juliaBtn, mandelbrotBtn } from '@View/Elements/runButtons';
 import { parm_a, parm_b } from '@View/Elements/inputs';
 
-import { draw, drawAxis, eraseAxis, onDone } from '@Model';
-import { FRACTALS } from '@Constants';
-import { hideAxis } from '@View/Elements/options';
+import { draw, onDone } from '@Model';
 
+// Handler of Fractal mode
 let currentFractal = FRACTALS.MANDELBROT;
+export function setCurrentFractal(fractal: FRACTALS) {
+  currentFractal = fractal;
+}
+export function getCurrentFractal(): FRACTALS {
+  return currentFractal;
+}
+
 let renderInProcess = false;
-let showAxis = true;
-
 export function addListeners() {
-  // Listeners on click buttons
-  onClick(mandelbrotBtn, () => {
-    currentFractal = FRACTALS.MANDELBROT;
-    runDraw();
-  });
+  // Listeners on inputs
+  addInputsListeners();
 
-  onClick(juliaBtn, () => {
-    currentFractal = FRACTALS.JULIA;
-    runDraw();
-  });
-
-  // Listeners on change inputs
-  onChange(parm_a, drawOnChange);
-  onChange(parm_b, drawOnChange);
-
-  // Listeners on Input
-  onInput(parm_a, changeAxis);
-  onInput(parm_b, changeAxis);
-
-  // Event on hide / show axis
-  onChange(hideAxis, () => {
-    showAxis = hideAxis.checked;
-    if (!showAxis) eraseAxis();
-    runDraw();
-  });
+  // Zoom Events
+  addZoomListeners();
 
   // Listener on done
   onDone(() => {
@@ -61,23 +46,5 @@ export function runDraw() {
     setTimeout(blockView); // enqueue (1)
 
     draw(currentFractal, c);
-  }
-}
-
-function drawOnChange() {
-  // Only when julia is current
-  if (currentFractal === FRACTALS.JULIA) {
-    runDraw();
-  }
-}
-
-function changeAxis() {
-  // Only when mandelbrot is current
-  if (showAxis && currentFractal === FRACTALS.MANDELBROT) {
-    const c: complex = {
-      real: parm_a.valueAsNumber,
-      img: parm_b.valueAsNumber,
-    };
-    drawAxis(currentFractal, c);
   }
 }

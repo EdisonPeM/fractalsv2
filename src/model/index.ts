@@ -1,15 +1,15 @@
 import Painter from './Lib/Painter';
 import { myCanva } from '@View/Elements/canvas';
 
-import { compareAndSave } from './cache';
-import { ACTIONS, FRACTALS, METHODS } from '@Constants';
+import { compareAndSave, saveInCache } from './cache';
+import { ACTIONS, FRACTALS, METHODS, ZOOM_OPS } from '@Constants';
 
 import {
   sendWorkerMessage,
   onWorkerMessage,
   threads,
 } from './Managers/workersManager';
-import { LIMITS } from './Managers/zoomManager';
+import { LIMITS, zoom } from './Managers/zoomManager';
 import { colorsRGB } from './Managers/colorManager';
 
 // Add Event Listeners with Observer Pattern
@@ -21,13 +21,10 @@ function done(payload: any = true) {
   observers.forEach(cb => cb(payload));
 }
 
-/// --------------------------------------------------------------------
 // Canva manipulator
 const myPainer: Painter = new Painter(myCanva);
 
-// ----------------------------------------------------------
 let workersFinished = 0;
-
 export function initWorkers() {
   sendWorkerMessage({
     action: ACTIONS.INIT,
@@ -86,4 +83,33 @@ export function drawAxis(fractal: FRACTALS, c: complex) {
 
 export function eraseAxis() {
   myPainer.drawAxis(0, 0, 0, 0);
+}
+
+export function handleZoom(
+  fractalOnZoom: FRACTALS,
+  zoomAction: ZOOM_OPS,
+  center: coord
+) {
+  // calculate the mapping of the coord
+  saveInCache('fractal', null);
+  switch (zoomAction) {
+    case ZOOM_OPS.ZOOM_IN: {
+      return zoom(fractalOnZoom, center, 0.5);
+    }
+
+    case ZOOM_OPS.ZOOM_OUT: {
+      return zoom(fractalOnZoom, center, 2);
+    }
+
+    case ZOOM_OPS.MOVE_POSITION: {
+      return zoom(fractalOnZoom, center, 1);
+    }
+
+    case ZOOM_OPS.HOME: {
+      return zoom(fractalOnZoom, center, 0);
+    }
+
+    default:
+      return null;
+  }
 }

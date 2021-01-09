@@ -1,5 +1,6 @@
 import { e } from '../helpers';
 
+import { zoomControls, zoomLevel } from './zoomControls';
 import '../Assets/sass/canvas.scss';
 
 // main Canva
@@ -20,4 +21,10 @@ export const canvaDiv = e('div');
 canvaDiv.className = 'canva';
 
 canvaDiv.append(myCanva);
+
+// controls
+canvaDiv.append(zoomControls);
+canvaDiv.append(zoomLevel);
+
+// spinner
 canvaDiv.append(spinner);

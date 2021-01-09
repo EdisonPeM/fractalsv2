@@ -7,6 +7,18 @@
     max-width: 500px;
     background-color: #fff;
     box-shadow: 0 0 5px #0003;
+
+    &.zoom-in {
+      cursor: zoom-in;
+    }
+
+    &.zoom-out {
+      cursor: zoom-out;
+    }
+
+    &.crosshair {
+      cursor: crosshair;
+    }
   }
 }
 
