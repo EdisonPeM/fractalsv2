@@ -1,0 +1,63 @@
+/* ------------------------------ */
+/*         Zooom Controls         */
+/* ------------------------------ */
+.zoom-controls {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.control {
+  cursor: pointer;
+  display: block;
+  border: none;
+  padding: 10px;
+
+  background-color: #eee;
+
+  &:first-child {
+    border-top-left-radius: 1em;
+  }
+
+  &:not(:first-child) {
+    border-top: solid 1px #ddd;
+  }
+
+  &:hover {
+    opacity: 1;
+    background-color: #777;
+    color: white;
+  }
+
+  &:active,
+  &.active {
+    opacity: 1;
+    background-color: #444;
+    color: white;
+  }
+
+  &:focus {
+    outline: 1px solid hsl(229, 90%, 55%);
+  }
+}
+
+.zoom-level {
+  font-size: 0.9em;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0.4em;
+  background-color: #eee;
+  color: black;
+  border-top-right-radius: 10px;
+  user-select: none;
+}
+
+.control,
+.zoom-level {
+  opacity: 0.4;
+
+  &:hover {
+    opacity: 1;
+  }
+}
