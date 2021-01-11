@@ -10,7 +10,7 @@ import {
   threads,
 } from './Managers/workersManager';
 import { LIMITS, zoom } from './Managers/zoomManager';
-import { colorsRGB } from './Managers/colorManager';
+import { getColors, defaultColors } from './Managers/colorManager';
 
 // Add Event Listeners with Observer Pattern
 const observers: Array<Function> = [];
@@ -33,7 +33,7 @@ export function initWorkers() {
       method: METHODS.SQUARE,
       width: myCanva.width,
       height: myCanva.height,
-      colors: colorsRGB,
+      colors: getColors(defaultColors),
     },
   });
 
@@ -64,6 +64,16 @@ export function draw(fractal: FRACTALS, c: complex) {
       fractal,
       limits: LIMITS[fractal],
       complexNum: c,
+    },
+  });
+}
+
+export function changeColors(colors: string[]) {
+  saveInCache('fractal', null);
+  sendWorkerMessage({
+    action: ACTIONS.CHANGE_COLORS,
+    payload: {
+      colors: getColors(colors),
     },
   });
 }

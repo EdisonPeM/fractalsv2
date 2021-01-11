@@ -10,6 +10,7 @@ import { runBtns } from './Elements/runButtons';
 import { canvaDiv, showSpinner } from './Elements/canvas';
 import { downloadBtn } from './Elements/downloadButton';
 import { hideAxisWrap } from './Elements/options';
+import { modal, openModalbtn } from './Elements/modal';
 
 // Add Styles
 import './Assets/sass/index.scss';
@@ -34,6 +35,8 @@ export function initView() {
   App?.append(hideAxisWrap);
   App?.append(e('br'));
   App?.append(downloadBtn);
+  App?.append(openModalbtn);
+  App?.append(modal);
 }
 
 export function blockView() {
