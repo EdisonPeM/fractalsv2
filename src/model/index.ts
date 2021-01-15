@@ -9,7 +9,7 @@ import {
   onWorkerMessage,
   threads,
 } from './Managers/workersManager';
-import { LIMITS, zoom } from './Managers/zoomManager';
+import { configLimits, LIMITS, zoom } from './Managers/zoomManager';
 import { getColors, defaultColors } from './Managers/colorManager';
 
 // Add Event Listeners with Observer Pattern
@@ -56,7 +56,6 @@ export function draw(fractal: FRACTALS, c: complex) {
   const imgChanged = compareAndSave('c.img', c.img);
   if (!fractalChanged && !realChanged && !imgChanged) return done();
 
-  myPainer.clear();
   workersFinished = 0;
   sendWorkerMessage({
     action: ACTIONS.CALCULATE,
@@ -74,6 +73,17 @@ export function changeColors(colors: string[]) {
     action: ACTIONS.CHANGE_COLORS,
     payload: {
       colors: getColors(colors),
+    },
+  });
+}
+
+export function changeMethod(method: METHODS) {
+  saveInCache('fractal', null);
+  configLimits(method);
+  sendWorkerMessage({
+    action: ACTIONS.CHANGE_METHOD,
+    payload: {
+      method,
     },
   });
 }

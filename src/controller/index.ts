@@ -1,13 +1,13 @@
 import { FRACTALS } from '@Constants';
 import { addZoomListeners, getZoomLevels } from './zoomController';
 import { addInputsListeners, changeAxis } from './fractalController';
+import { addOptionListeners } from './optionsController';
 
 import { blockView, unBlockView } from '@View';
 import { parm_a, parm_b } from '@View/Elements/inputs';
 import { showZoomLevel } from '@View/Elements/zoomControls';
-import { onChangeColors } from '@View/Elements/modal';
 
-import { changeColors, draw, onDone } from '@Model';
+import { draw, onDone } from '@Model';
 
 // Handler of Fractal mode
 let currentFractal = FRACTALS.MANDELBROT;
@@ -26,17 +26,15 @@ export function addListeners() {
   // Zoom Events
   addZoomListeners();
 
-  onChangeColors((newColors: string[]) => {
-    changeColors(newColors);
-    runDraw();
-  });
+  // Options Listener
+  addOptionListeners();
 
   // Listener on done
   onDone(() => {
     changeAxis();
 
     renderInProcess = false;
-    console.timeEnd('Painted in');
+    // console.timeEnd('Painted in');
     setTimeout(unBlockView); // enqueue (2)
   });
 }
@@ -52,8 +50,10 @@ export function runDraw() {
 
   if (!renderInProcess) {
     renderInProcess = true;
-    console.time('Painted in');
-    setTimeout(blockView); // enqueue (1)
+    // console.time('Painted in');
+    setTimeout(() => {
+      if (!renderInProcess) blockView();
+    }); // enqueue (1)
 
     draw(currentFractal, c);
   }

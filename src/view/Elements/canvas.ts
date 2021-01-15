@@ -5,8 +5,8 @@ import '../Assets/sass/canvas.scss';
 
 // main Canva
 export const myCanva = e('canvas');
-myCanva.width = 1024;
-myCanva.height = 1024;
+myCanva.width = 512;
+myCanva.height = 512;
 
 const spinner = e('div');
 spinner.className = 'spinner';

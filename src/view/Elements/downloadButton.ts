@@ -1,11 +1,15 @@
-import { e } from '../helpers';
+import { addIcon, e } from '../helpers';
 import { Button } from '../Components/Button';
 import { myCanva } from './canvas';
 
-export const downloadBtn = Button('Descargar Fractal');
+import { faFileDownload } from '@fortawesome/free-solid-svg-icons/faFileDownload';
+
+export const downloadBtn = Button('Descargar ');
 downloadBtn.addEventListener('click', () => {
   const link = e('a');
   link.download = 'fractal.png';
   link.href = myCanva.toDataURL();
   link.click();
 });
+
+addIcon(downloadBtn, faFileDownload);

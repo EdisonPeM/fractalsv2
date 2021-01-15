@@ -1,6 +1,8 @@
 import { Button } from '@View/Components/Button';
-import { e } from '@View/helpers';
+import { addIcon, e } from '@View/helpers';
 import { GradientGenerator, GeneratorManager } from 'gradient-generator-ui';
+
+import { faPalette } from '@fortawesome/free-solid-svg-icons/faPalette';
 
 import 'gradient-generator-ui/dist/gradient-generator.css';
 import '../Assets/sass/modal.scss';
@@ -8,8 +10,10 @@ import '../Assets/sass/modal.scss';
 export const modal = e('div');
 modal.className = 'modal';
 
-export const openModalbtn = Button('Cambiar colores');
+export const openModalbtn = Button('Cambiar Colores ');
+openModalbtn.classList.add('btn-colors');
 openModalbtn.addEventListener('click', () => openModal());
+addIcon(openModalbtn, faPalette);
 
 const modalContent = e('div');
 modalContent.className = 'modal-content';

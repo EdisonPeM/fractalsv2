@@ -24,6 +24,10 @@ export function addInputsListeners() {
   onChange(parm_a, drawOnChange);
   onChange(parm_b, drawOnChange);
 
+  // EXPERIMENTAL
+  onInput(parm_a, drawOnChange);
+  onInput(parm_b, drawOnChange);
+
   // Listeners on Input
   onInput(parm_a, changeAxis);
   onInput(parm_b, changeAxis);

@@ -17,3 +17,22 @@
     cursor: pointer;
   }
 }
+
+.select-method {
+  select {
+    font-size: 1em;
+    // color: white;
+    background-color: white;
+    vertical-align: top;
+
+    padding: 0.3em 1em;
+
+    vertical-align: middle;
+    border: 1px solid hsl(0, 0%, 75%);
+    border-radius: 5px;
+    margin: 5px;
+    outline: none;
+
+    cursor: pointer;
+  }
+}

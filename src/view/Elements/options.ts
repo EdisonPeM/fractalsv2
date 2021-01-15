@@ -1,3 +1,4 @@
+import { METHODS } from '@Constants';
 import { e } from '@View/helpers';
 
 import '../Assets/sass/options.scss';
@@ -14,3 +15,20 @@ hideAxis.defaultChecked = true;
 
 hideAxisWrap.append(hideAxis);
 hideAxisWrap.append(hideAxisLabel);
+
+export const selectMethodWrap = e('div');
+selectMethodWrap.className = 'select-method';
+
+export const selectMethod = e('select');
+const selectMethodLabel = e('label');
+selectMethodLabel.textContent = 'Seleccione un Metodo';
+
+selectMethodWrap.append(selectMethodLabel);
+selectMethodWrap.append(selectMethod);
+
+Object.values(METHODS).forEach(method => {
+  const optionEl = e('option');
+  optionEl.textContent = method;
+  optionEl.value = method;
+  selectMethod.append(optionEl);
+});

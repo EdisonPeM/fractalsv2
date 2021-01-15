@@ -1,3 +1,4 @@
+import { onClick } from './listeners';
 import { FRACTALS, ZOOM_OPS } from '@Constants';
 import { getCurrentFractal, runDraw } from '@Controller';
 import { handleZoom } from '@Model';
@@ -16,7 +17,6 @@ import {
   zoomPosition,
   activeZoomControl,
 } from '@View/Elements/zoomControls';
-import { onClick } from './listeners';
 
 let zoomOp: ZOOM_OPS = ZOOM_OPS.NONE;
 function setZoomOp(op: ZOOM_OPS) {
@@ -33,6 +33,11 @@ let zoomLevels = {
 };
 export function getZoomLevels() {
   return zoomLevels;
+}
+export function restartZoomLevels() {
+  Object.values(FRACTALS).forEach(fractal => {
+    zoomLevels[fractal] = 1;
+  });
 }
 
 let zoomInAction = false;
@@ -103,8 +108,8 @@ function changeZoom(center: coord) {
     const newInputsValues = newValue ?? c;
 
     console.info(newInputsValues);
-    updateParam_a(newInputsValues.real, newLimit.x);
-    updateParam_b(newInputsValues.img, newLimit.y);
+    updateParam_a(newLimit.x, newInputsValues.real);
+    updateParam_b(newLimit.y, newInputsValues.img);
   }
 
   // Re Draw
