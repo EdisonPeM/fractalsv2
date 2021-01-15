@@ -1,9 +1,8 @@
-import { e } from '../helpers';
+import { addIcon, e } from '../helpers';
 import { controlButton } from '../Components/Button';
 import { myCanva } from './canvas';
 
 // Third Part Libraries
-import { icon, IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faSearchPlus } from '@fortawesome/free-solid-svg-icons/faSearchPlus';
 import { faSearchMinus } from '@fortawesome/free-solid-svg-icons/faSearchMinus';
 // import { faArrowsAlt } from '@fortawesome/free-solid-svg-icons/faArrowsAlt';
@@ -30,13 +29,6 @@ zoomPosition.title = 'Change Fractal Position';
 export const zoomHome = controlButton();
 addIcon(zoomHome, faHome);
 zoomHome.title = 'Reset Default Zoom';
-
-function addIcon(parentNode: HTMLElement, iconDef: IconDefinition) {
-  Array.from(icon(iconDef).node).forEach(node => {
-    node.classList.add('fa-fw');
-    parentNode.append(node);
-  });
-}
 
 // Event to change canvas styles
 zoomIn.addEventListener('click', function () {
