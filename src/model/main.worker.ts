@@ -94,7 +94,7 @@ function runAlgorith(payload: any) {
     for (let i = minW; i < maxW; i++) {
       iterableComplex = {
         real: minX + (i * Dx) / width,
-        img: minY + (j * Dy) / height,
+        img: maxY - (j * Dy) / height,
       };
 
       if (fractal === FRACTALS.MANDELBROT) {

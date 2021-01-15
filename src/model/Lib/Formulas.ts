@@ -66,5 +66,5 @@ export const FORMULAS = {
   [METHODS.CUBIC]: cubic,
   [METHODS.FOUR]: four,
   [METHODS.TRICORN]: tricorn,
-  [METHODS.SHIP]: ship,
+  // [METHODS.SHIP]: ship,
 };

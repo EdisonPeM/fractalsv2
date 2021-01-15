@@ -48,7 +48,7 @@ export function addZoomListeners() {
       const { width, clientWidth, height, clientHeight } = myCanva;
       const clickCoor: coord = {
         x: (ev.offsetX * width) / clientWidth,
-        y: (ev.offsetY * height) / clientHeight,
+        y: height - (ev.offsetY * height) / clientHeight,
       };
 
       changeZoom(clickCoor);

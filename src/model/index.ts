@@ -56,7 +56,6 @@ export function draw(fractal: FRACTALS, c: complex) {
   const imgChanged = compareAndSave('c.img', c.img);
   if (!fractalChanged && !realChanged && !imgChanged) return done();
 
-  myPainer.clear();
   workersFinished = 0;
   sendWorkerMessage({
     action: ACTIONS.CALCULATE,
