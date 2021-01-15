@@ -9,7 +9,7 @@ import {
 import { runBtns } from './Elements/runButtons';
 import { canvaDiv, showSpinner } from './Elements/canvas';
 import { downloadBtn } from './Elements/downloadButton';
-import { hideAxisWrap } from './Elements/options';
+import { hideAxisWrap, selectMethodWrap } from './Elements/options';
 import { modal, openModalbtn } from './Elements/modal';
 
 // Add Styles
@@ -28,15 +28,19 @@ export function initView() {
   canvaContainer.append(container_parm_b); // down Right
 
   // Add all components to the main view
-  App?.append(runBtns);
-  App?.append(e('hr'));
-  App?.append(output);
-  App?.append(canvaContainer);
-  App?.append(hideAxisWrap);
-  App?.append(e('br'));
-  App?.append(downloadBtn);
-  App?.append(openModalbtn);
-  App?.append(modal);
+  if (App) {
+    App.append(runBtns);
+    App.append(e('hr'));
+    App.append(output);
+    App.append(canvaContainer);
+    //
+    App.append(selectMethodWrap);
+    App.append(hideAxisWrap);
+    App.append(e('br'));
+    App.append(downloadBtn);
+    App.append(openModalbtn);
+    App.append(modal);
+  }
 }
 
 export function blockView() {

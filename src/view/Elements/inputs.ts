@@ -1,11 +1,14 @@
 import { e } from '../helpers';
 import { InputParam } from '../Components/InputParam';
-import { INPUTS_LIMITS } from '@Constants';
+import { INITIAL_LIMITS } from '@Constants';
 
 import '../Assets/sass/inputs.scss';
 
-export const parm_a = InputParam(...INPUTS_LIMITS.x);
-export const parm_b = InputParam(...INPUTS_LIMITS.y);
+export const parm_a = InputParam(...INITIAL_LIMITS.x);
+export const parm_b = InputParam(...INITIAL_LIMITS.y);
+
+parm_a.tabIndex = 1;
+parm_b.tabIndex = 1;
 
 // Resize params
 function setRangeSize() {
@@ -67,16 +70,16 @@ updateLabelParam_a();
 updateLabelParam_b();
 
 // Restart Values after Zoom Operations
-export function updateParam_a(value: number, limits: [number, number]) {
-  parm_a.value = value.toFixed(3);
+export function updateParam_a(limits: [number, number], value?: number) {
+  if (value) parm_a.value = value.toFixed(3);
   parm_a.min = limits[0].toFixed(3);
   parm_a.max = limits[1].toFixed(3);
   updateLabelParam_a();
   updateOutput();
 }
 
-export function updateParam_b(value: number, limits: [number, number]) {
-  parm_b.value = value.toFixed(3);
+export function updateParam_b(limits: [number, number], value?: number) {
+  if (value) parm_b.value = value.toFixed(3);
   parm_b.min = limits[0].toFixed(3);
   parm_b.max = limits[1].toFixed(3);
   updateLabelParam_b();

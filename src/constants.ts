@@ -6,11 +6,11 @@ export enum FRACTALS {
 
 // methods Availables
 export enum METHODS {
-  SQUARE = 'SQUARE',
-  CUBIC = 'CUBIC',
-  FOUR = 'FOUR',
-  TRICORN = 'TRICORN',
-  SHIP = 'SHIP',
+  SQUARE = 'z = z^2 + c',
+  CUBIC = 'z = z^3 + c',
+  FOUR = 'z = z^4 + c',
+  TRICORN = 'z = conj(z)^2 + c',
+  SHIP = 'Buring Ship',
 }
 
 // Worker Actions
@@ -31,7 +31,12 @@ export enum ZOOM_OPS {
 }
 
 // Basic Inputs Limits
-export const INPUTS_LIMITS: limit = {
+export const INITIAL_LIMITS: limit = {
   x: [-2.5, 1],
+  y: [-1.75, 1.75],
+};
+
+export const GENERAL_LIMITS: limit = {
+  x: [-1.75, 1.75],
   y: [-1.75, 1.75],
 };

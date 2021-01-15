@@ -1,7 +1,7 @@
 import { absComplex } from './Formulas';
 
 const R = 10;
-const M = R ** 2;
+const M = R * R;
 
 // Typing
 type params = {
@@ -15,8 +15,8 @@ type params = {
 export function calculate({ fn, N, cn, z0 }: params) {
   // complex to iterate
   let zn = z0;
-  let r = absComplex(zn);
   let n = 0;
+  let r = absComplex(zn);
 
   // Iterations
   while (r < M && n < N) {

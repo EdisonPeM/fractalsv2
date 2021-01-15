@@ -67,9 +67,9 @@ function runAlgorith(payload: any) {
   const minH = id * dh;
   const maxH = (id + 1) * dh;
 
-  const dw = height / threads;
-  const minW = 0; // id * dw;
-  const maxW = width; // (id + 1) * dw;
+  const dw = width / threads;
+  const minW = 0; //id * dw;
+  const maxW = width; //(id + 1) * dw;
 
   // Create the image Data
   const imgData = new ImageData(maxW - minW, maxH - minH);
@@ -79,54 +79,43 @@ function runAlgorith(payload: any) {
   let colorRgb: colorRGB = colors[0];
   let colorIndx = 0;
 
-  // Iterable complex number by fractal
-  let iterableComplex: complex = originComplex;
-
   // Algorithm
   const [minX, maxX] = limits.x;
   const [minY, maxY] = limits.y;
   const Dx = maxX - minX;
   const Dy = maxY - minY;
 
+  // Iterable complex number by fractal
+  let iterableComplex: complex;
+  let cn: complex = complexNum;
+  let z0: complex = originComplex;
+
   for (let j = minH; j < maxH; j++) {
-    setTimeout(() => {
-      for (let i = minW; i < maxW; i++) {
-        iterableComplex = {
-          real: minX + (i * Dx) / width,
-          img: maxY - (j * Dy) / height,
-        };
+    for (let i = minW; i < maxW; i++) {
+      iterableComplex = {
+        real: minX + (i * Dx) / width,
+        img: minY + (j * Dy) / height,
+      };
 
-        if (fractal === FRACTALS.MANDELBROT) {
-          colorIndx = calculate({
-            fn,
-            N,
-            cn: iterableComplex,
-            z0: originComplex,
-          });
-        } else {
-          colorIndx = calculate({
-            fn,
-            N,
-            cn: complexNum,
-            z0: iterableComplex,
-          });
-        }
-
-        colorRgb = colors[colorIndx];
-        imgData.data[imgIndx++] = colorRgb.red;
-        imgData.data[imgIndx++] = colorRgb.green;
-        imgData.data[imgIndx++] = colorRgb.blue;
-        imgData.data[imgIndx++] = 255; // Alpha
+      if (fractal === FRACTALS.MANDELBROT) {
+        cn = iterableComplex;
+      } else {
+        z0 = iterableComplex;
       }
-    });
+
+      colorIndx = calculate({ fn, N, cn, z0 });
+      colorRgb = colors[colorIndx];
+      imgData.data[imgIndx++] = colorRgb.red;
+      imgData.data[imgIndx++] = colorRgb.green;
+      imgData.data[imgIndx++] = colorRgb.blue;
+      imgData.data[imgIndx++] = 255; // Alpha
+    }
   }
 
-  setTimeout(() => {
-    ctx.postMessage({
-      imgData,
-      min: minH,
-      max: maxH,
-    });
+  ctx.postMessage({
+    imgData,
+    min: minH,
+    max: maxH,
   });
 }
 

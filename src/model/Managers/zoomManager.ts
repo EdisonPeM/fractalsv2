@@ -1,4 +1,4 @@
-import { FRACTALS, INPUTS_LIMITS } from '@Constants';
+import { FRACTALS, GENERAL_LIMITS, INITIAL_LIMITS, METHODS } from '@Constants';
 import { myCanva } from '@View/Elements/canvas';
 import { clone } from '../Lib/utils';
 
@@ -8,12 +8,23 @@ const JULIA_DEFAULT: limit = {
 };
 
 const defaultLimits: { [key in FRACTALS]: limit } = {
-  [FRACTALS.MANDELBROT]: INPUTS_LIMITS,
+  [FRACTALS.MANDELBROT]: INITIAL_LIMITS,
   [FRACTALS.JULIA]: JULIA_DEFAULT,
 };
 
 // Change Limits to do zoom in-out
 export const LIMITS = clone(defaultLimits);
+export function configLimits(method: METHODS) {
+  if (method === METHODS.SQUARE) {
+    LIMITS[FRACTALS.MANDELBROT] = INITIAL_LIMITS;
+    defaultLimits[FRACTALS.MANDELBROT] = INITIAL_LIMITS;
+  } else {
+    LIMITS[FRACTALS.MANDELBROT] = GENERAL_LIMITS;
+    defaultLimits[FRACTALS.MANDELBROT] = GENERAL_LIMITS;
+  }
+
+  return LIMITS;
+}
 
 export function zoom(
   fractal: FRACTALS,

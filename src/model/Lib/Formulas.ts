@@ -1,11 +1,11 @@
 import { METHODS } from '@Constants';
 
 export function absComplex(z: complex): number {
-  return z.real ** 2 + z.img ** 2;
+  return z.real * z.real + z.img * z.img;
 }
 
 export function square(z: complex, c: complex): complex {
-  const square_real = z.real ** 2 - z.img ** 2;
+  const square_real = z.real * z.real - z.img * z.img;
   const square_img = 2 * z.real * z.img;
 
   return {
@@ -15,8 +15,8 @@ export function square(z: complex, c: complex): complex {
 }
 
 export function cubic(z: complex, c: complex): complex {
-  const cubic_real = z.real ** 3 - 3 * z.real * z.img ** 2;
-  const cubic_imag = 3 * z.real ** 2 * z.img - z.img ** 3;
+  const cubic_real = z.real * z.real * z.real - 3 * z.real * z.img * z.img;
+  const cubic_imag = 3 * z.real * z.real * z.img - z.img * z.img * z.img;
 
   return {
     real: cubic_real + c.real,
@@ -25,8 +25,12 @@ export function cubic(z: complex, c: complex): complex {
 }
 
 export function four(z: complex, c: complex): complex {
-  const four_real = z.real ** 4 + z.img ** 4 - 6 * z.real ** 2 * z.img ** 2;
-  const four_imag = 4 * z.real ** 3 * z.img - 4 * z.real * z.img ** 3;
+  const four_real =
+    z.real * z.real * z.real * z.real +
+    z.img * z.img * z.img * z.img -
+    6 * (z.real * z.real) * (z.img * z.img);
+  const four_imag =
+    4 * (z.real * z.real * z.real) * z.img - 4 * z.real * z.img * z.img * z.img;
 
   return {
     real: four_real + c.real,
@@ -35,7 +39,7 @@ export function four(z: complex, c: complex): complex {
 }
 
 export function tricorn(z: complex, c: complex): complex {
-  const tricorn_real = z.real ** 2 - z.img ** 2;
+  const tricorn_real = z.real * z.real - z.img * z.img;
   const tricorn_imag = -2 * z.real * z.img;
 
   return {
@@ -48,7 +52,7 @@ export function ship(z: complex, c: complex): complex {
   const abs_real = Math.abs(z.real);
   const abs_img = Math.abs(z.img);
 
-  const ship_real = abs_real ** 2 - abs_img ** 2;
+  const ship_real = abs_real * abs_real - abs_img * abs_img;
   const ship_imag = 2 * abs_real * abs_img;
 
   return {

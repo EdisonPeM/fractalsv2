@@ -9,7 +9,7 @@ import {
   onWorkerMessage,
   threads,
 } from './Managers/workersManager';
-import { LIMITS, zoom } from './Managers/zoomManager';
+import { configLimits, LIMITS, zoom } from './Managers/zoomManager';
 import { getColors, defaultColors } from './Managers/colorManager';
 
 // Add Event Listeners with Observer Pattern
@@ -76,6 +76,18 @@ export function changeColors(colors: string[]) {
       colors: getColors(colors),
     },
   });
+}
+
+export function changeMethod(method: METHODS): limit {
+  saveInCache('fractal', null);
+  sendWorkerMessage({
+    action: ACTIONS.CHANGE_METHOD,
+    payload: {
+      method,
+    },
+  });
+
+  return configLimits(method);
 }
 
 export function drawAxis(fractal: FRACTALS, c: complex) {
