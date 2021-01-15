@@ -34,7 +34,7 @@ export function addListeners() {
     changeAxis();
 
     renderInProcess = false;
-    console.timeEnd('Painted in');
+    // console.timeEnd('Painted in');
     setTimeout(unBlockView); // enqueue (2)
   });
 }
@@ -50,8 +50,10 @@ export function runDraw() {
 
   if (!renderInProcess) {
     renderInProcess = true;
-    console.time('Painted in');
-    setTimeout(blockView); // enqueue (1)
+    // console.time('Painted in');
+    setTimeout(() => {
+      if (!renderInProcess) blockView();
+    }); // enqueue (1)
 
     draw(currentFractal, c);
   }

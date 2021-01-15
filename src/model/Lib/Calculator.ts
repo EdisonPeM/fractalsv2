@@ -1,6 +1,6 @@
 import { absComplex } from './Formulas';
 
-const R = 10;
+const R = 5;
 const M = R * R;
 
 // Typing
