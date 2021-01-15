@@ -77,16 +77,15 @@ export function changeColors(colors: string[]) {
   });
 }
 
-export function changeMethod(method: METHODS): limit {
+export function changeMethod(method: METHODS) {
   saveInCache('fractal', null);
+  configLimits(method);
   sendWorkerMessage({
     action: ACTIONS.CHANGE_METHOD,
     payload: {
       method,
     },
   });
-
-  return configLimits(method);
 }
 
 export function drawAxis(fractal: FRACTALS, c: complex) {

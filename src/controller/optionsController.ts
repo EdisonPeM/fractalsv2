@@ -1,6 +1,6 @@
 import { onChange } from './listeners';
 import { restartZoomLevels } from './zoomController';
-import { METHODS } from '@Constants';
+import { FRACTALS, METHODS } from '@Constants';
 
 import { getCurrentFractal, runDraw } from '@Controller';
 import { changeColors, changeMethod } from '@Model';
@@ -21,9 +21,8 @@ export function addOptionListeners() {
   onChange(selectMethod, () => {
     changeMethod(selectMethod.value as METHODS);
 
-    const currentFractal = getCurrentFractal();
-    updateParam_a(LIMITS[currentFractal].x);
-    updateParam_b(LIMITS[currentFractal].y);
+    updateParam_a(LIMITS[FRACTALS.MANDELBROT].x);
+    updateParam_b(LIMITS[FRACTALS.MANDELBROT].y);
 
     restartZoomLevels();
     runDraw();

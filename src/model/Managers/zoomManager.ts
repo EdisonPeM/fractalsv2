@@ -1,6 +1,6 @@
 import { FRACTALS, GENERAL_LIMITS, INITIAL_LIMITS, METHODS } from '@Constants';
 import { myCanva } from '@View/Elements/canvas';
-import { clone } from '../Lib/utils';
+import { clone } from '@Model/Lib/utils';
 
 const JULIA_DEFAULT: limit = {
   x: [-1.5, 1.5],
@@ -16,14 +16,14 @@ const defaultLimits: { [key in FRACTALS]: limit } = {
 export const LIMITS = clone(defaultLimits);
 export function configLimits(method: METHODS) {
   if (method === METHODS.SQUARE) {
-    LIMITS[FRACTALS.MANDELBROT] = INITIAL_LIMITS;
     defaultLimits[FRACTALS.MANDELBROT] = INITIAL_LIMITS;
   } else {
-    LIMITS[FRACTALS.MANDELBROT] = GENERAL_LIMITS;
     defaultLimits[FRACTALS.MANDELBROT] = GENERAL_LIMITS;
   }
 
-  return LIMITS;
+  Object.values(FRACTALS).forEach(fractal => {
+    LIMITS[fractal] = defaultLimits[FRACTALS.JULIA];
+  });
 }
 
 export function zoom(
