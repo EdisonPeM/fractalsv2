@@ -3,6 +3,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
+
+const WebpackPwaManifestPlugin = require('webpack-pwa-manifest');
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+
 const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 
@@ -63,12 +67,49 @@ module.exports = (env, argv) => {
       new CopyPlugin({
         patterns: [{ from: path.resolve(__dirname, 'public') }],
       }),
+      new WebpackPwaManifestPlugin({
+        name: 'Fractals',
+        shortname: 'Mandelbrot & Julia Fractals',
+        description:
+          'Aplicación para generar fractales del conjunto de Mandelbrot y Julia',
+        background_color: '#c9f7f7',
+        theme_color: '#c9f7f7',
+        ios: {
+          'apple-mobile-web-app-title': 'AppTitle',
+          'apple-mobile-web-app-status-bar-style': 'black-translucent',
+        },
+        icons: [
+          {
+            src: path.resolve(__dirname, 'public/favicon.png'),
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('icons'),
+            ios: true,
+          },
+          {
+            src: path.resolve(__dirname, 'public/maskable_icon.png'),
+            size: [512, 1024],
+            destination: path.join('icons'),
+            ios: 'startup',
+          },
+          {
+            src: path.resolve(__dirname, 'public/maskable_icon.png'),
+            size: [512, 1024],
+            destination: path.join('icons'),
+            purpose: 'maskable',
+          },
+        ],
+      }),
       new ImageMinimizerPlugin({
         minimizerOptions: {
           plugins: [['optipng', { optimizationLevel: 5 }]],
         },
       }),
-    ],
+      !isDevelop &&
+        new WorkboxWebpackPlugin.GenerateSW({
+          cleanupOutdatedCaches: true,
+          clientsClaim: true,
+        }),
+    ].filter(Boolean),
     devtool: isDevelop ? 'eval' : 'source-map',
     optimization: {
       usedExports: !isDevelop,
