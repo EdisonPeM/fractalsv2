@@ -5,7 +5,7 @@ export function InputParam(min: number, max: number, defaultValue: number = 0) {
   range.type = 'range';
   range.min = `${min}`;
   range.max = `${max}`;
-  range.step = '0.001';
+  range.step = ((max - min) / 1000).toString();
   range.title = '0';
   range.defaultValue = defaultValue.toString();
 

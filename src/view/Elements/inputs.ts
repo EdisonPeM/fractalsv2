@@ -52,15 +52,15 @@ container_parm_b.append(parm_b);
 
 // Update Labels on Change
 function updateLabelParam_a() {
-  parm_a.title = parm_a.value;
-  container_parm_a.dataset.min = parm_a.min;
-  container_parm_a.dataset.max = parm_a.max;
+  parm_a.title = (+parm_a.value).toFixed(3);
+  container_parm_a.dataset.min = (+parm_a.min).toFixed(3);
+  container_parm_a.dataset.max = (+parm_a.max).toFixed(3);
 }
 
 function updateLabelParam_b() {
-  parm_b.title = parm_b.value;
-  container_parm_b.dataset.min = parm_b.min;
-  container_parm_b.dataset.max = parm_b.max;
+  parm_b.title = (+parm_b.value).toFixed(3);
+  container_parm_b.dataset.min = (+parm_b.min).toFixed(3);
+  container_parm_b.dataset.max = (+parm_b.max).toFixed(3);
 }
 
 parm_a.addEventListener('change', updateLabelParam_a);
@@ -71,17 +71,24 @@ updateLabelParam_b();
 
 // Restart Values after Zoom Operations
 export function updateParam_a(limits: [number, number], value?: number) {
-  if (value) parm_a.value = value.toFixed(3);
-  parm_a.min = limits[0].toFixed(3);
-  parm_a.max = limits[1].toFixed(3);
+  if (value) parm_a.value = value.toString();
+  const [min, max] = limits;
+  parm_a.min = min.toString();
+  parm_a.max = max.toString();
+  parm_a.step = ((max - min) / 1000).toString();
+
   updateLabelParam_a();
   updateOutput();
 }
 
 export function updateParam_b(limits: [number, number], value?: number) {
-  if (value) parm_b.value = value.toFixed(3);
-  parm_b.min = limits[0].toFixed(3);
-  parm_b.max = limits[1].toFixed(3);
+  if (value) parm_b.value = value.toString();
+
+  const [min, max] = limits;
+  parm_b.min = min.toString();
+  parm_b.max = max.toString();
+  parm_b.step = ((max - min) / 1000).toString();
+
   updateLabelParam_b();
   updateOutput();
 }
