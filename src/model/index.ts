@@ -13,7 +13,7 @@ import {
 
 import { done } from '@Controller';
 import { myCanva } from '@View/Elements/canvas';
-import { getColors } from './Managers/colorManager';
+import { getFractalColors } from './Managers/colorManager';
 import { getLimits } from './Managers/zoomManager';
 import { FRACTALS, METHODS } from '@Constants';
 
@@ -48,7 +48,7 @@ export function run() {
   if (!fractalChanged && !realChanged && !imgChanged) return done();
 
   const { width, height } = myCanva;
-  const colors: colorRGB[] = getColors();
+  const colors: colorRGB[] = getFractalColors();
   const limits: limit = getLimits(fractal);
   const method: METHODS = getMethod();
 
