@@ -106,7 +106,7 @@ module.exports = (env, argv) => {
       }),
       !isDevelop &&
         new WorkboxWebpackPlugin.GenerateSW({
-          limpiezaOutdatedCaches: true,
+          cleanupOutdatedCaches: true,
           skipWaiting: false,
           clientsClaim: true,
         }),
