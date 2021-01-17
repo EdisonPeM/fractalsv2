@@ -1,9 +1,13 @@
 import { FRACTALS } from '@Constants';
-import { getLimits } from './zoomManager';
-import Painter from '../Lib/Painter';
+import { getLimits } from './limitsManager';
+import {
+  getComplexNum,
+  getCurrentFractal,
+  getFractalLimits,
+} from './fractalManager';
 
+import Painter from '../Lib/Painter';
 import { myCanva } from '@View/Elements/canvas';
-import { getComplexNum, getCurrentFractal } from './fractalManager';
 
 const myPainer: Painter = new Painter(myCanva);
 
@@ -12,15 +16,15 @@ export function drawFragment(imgData: ImageData, min: number) {
 }
 
 export function drawAxis() {
-  const fractal: FRACTALS = getCurrentFractal();
   const c: complex = getComplexNum();
+  const limits: limit = getFractalLimits();
 
-  const limits = getLimits(fractal);
   const [minX, maxX] = limits.x;
   const [minY, maxY] = limits.y;
 
   const posX = c.real - minX;
   const posY = c.img - minY;
+
   const Dx = maxX - minX;
   const Dy = maxY - minY;
 

@@ -1,3 +1,4 @@
+import { FRACTALS, METHODS } from '@Constants';
 import { compareAndSave } from './cache';
 import {
   sendWorkerMessage,
@@ -9,13 +10,12 @@ import {
   getCurrentFractal,
   getComplexNum,
   getMethod,
+  getFractalLimits,
 } from './Managers/fractalManager';
+import { getFractalColors } from './Managers/colorManager';
 
 import { done } from '@Controller';
 import { myCanva } from '@View/Elements/canvas';
-import { getFractalColors } from './Managers/colorManager';
-import { getLimits } from './Managers/zoomManager';
-import { FRACTALS, METHODS } from '@Constants';
 
 // ------------------------------------------------------------------ //
 //                       Worker Listener                              //
@@ -49,7 +49,7 @@ export function run() {
 
   const { width, height } = myCanva;
   const colors: colorRGB[] = getFractalColors();
-  const limits: limit = getLimits(fractal);
+  const limits: limit = getFractalLimits();
   const method: METHODS = getMethod();
 
   workersFinished = 0;

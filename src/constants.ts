@@ -35,8 +35,3 @@ export const INITIAL_LIMITS: limit = {
   x: [-2.5, 1],
   y: [-1.75, 1.75],
 };
-
-export const GENERAL_LIMITS: limit = {
-  x: [-1.75, 1.75],
-  y: [-1.75, 1.75],
-};

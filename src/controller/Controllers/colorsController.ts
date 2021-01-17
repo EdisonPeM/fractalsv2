@@ -38,6 +38,7 @@ export function addColorsListener() {
     if (ev.target === modal) rejectNewColors();
   });
 
+  setColorsBase(myGen.getGradientColors());
   setFractalColors(myGen.generateColors());
 }
 
