@@ -53,7 +53,7 @@ export function ship(z: complex, c: complex): complex {
   const abs_img = Math.abs(z.img);
 
   const ship_real = abs_real * abs_real - abs_img * abs_img;
-  const ship_imag = 2 * abs_real * abs_img;
+  const ship_imag = -2 * abs_real * abs_img;
 
   return {
     real: ship_real + c.real,
@@ -66,5 +66,5 @@ export const FORMULAS = {
   [METHODS.CUBIC]: cubic,
   [METHODS.FOUR]: four,
   [METHODS.TRICORN]: tricorn,
-  // [METHODS.SHIP]: ship,
+  [METHODS.SHIP]: ship,
 };

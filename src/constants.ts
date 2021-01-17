@@ -10,7 +10,7 @@ export enum METHODS {
   CUBIC = 'z = z^3 + c',
   FOUR = 'z = z^4 + c',
   TRICORN = 'z = conj(z)^2 + c',
-  // SHIP = 'Buring Ship',
+  SHIP = 'Buring Ship',
 }
 
 // Worker Actions
