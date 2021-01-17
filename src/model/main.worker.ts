@@ -1,51 +1,19 @@
-import { ACTIONS, METHODS, FRACTALS } from '@Constants';
+import { METHODS, FRACTALS } from '@Constants';
 import { FORMULAS } from './Lib/Formulas';
 import { calculate } from './Lib/Calculator';
 
 const ctx: Worker = self as any;
 
-const params = {
-  threads: 1,
-  colors: [],
-  width: 1024,
-  height: 1024,
-  method: METHODS.SQUARE,
-};
-
-ctx.onmessage = ({ data: { action, payload } }: any) => {
-  switch (action) {
-    case ACTIONS.INIT: {
-      const { threads, colors, method, width, height } = payload;
-
-      params.threads = threads;
-      params.colors = colors;
-      params.method = method;
-      params.width = width;
-      params.height = height;
-      break;
-    }
-
-    case ACTIONS.CALCULATE: {
-      runAlgorith(payload);
-      break;
-    }
-
-    case ACTIONS.CHANGE_METHOD: {
-      const { method } = payload;
-      params.method = method;
-      break;
-    }
-
-    // Update when colors changed
-    case ACTIONS.CHANGE_COLORS: {
-      const { colors } = payload;
-      params.colors = colors;
-      break;
-    }
-
-    default:
-      break;
-  }
+type payload = {
+  id: number;
+  width: number;
+  height: number;
+  threads: number;
+  method: METHODS;
+  colors: colorRGB[];
+  fractal: FRACTALS;
+  limits: limit;
+  complexNum: complex;
 };
 
 // Origin
@@ -54,9 +22,18 @@ const originComplex: complex = {
   img: 0,
 };
 
-function runAlgorith(payload: any) {
-  const { id, fractal, limits, complexNum } = payload;
-  const { width, height, threads, method, colors } = params;
+ctx.onmessage = ({ data }: { data: payload }) => {
+  const {
+    id,
+    width,
+    height,
+    threads,
+    method,
+    colors,
+    fractal,
+    limits,
+    complexNum,
+  } = data;
 
   // Configs vars to calculate
   const fn = FORMULAS[method];
@@ -67,9 +44,8 @@ function runAlgorith(payload: any) {
   const minH = id * dh;
   const maxH = (id + 1) * dh;
 
-  const dw = width / threads;
-  const minW = 0; //id * dw;
-  const maxW = width; //(id + 1) * dw;
+  const minW = 0;
+  const maxW = width;
 
   // Create the image Data
   const imgData = new ImageData(maxW - minW, maxH - minH);
@@ -117,6 +93,6 @@ function runAlgorith(payload: any) {
     min: minH,
     max: maxH,
   });
-}
+};
 
 export default null as any;
