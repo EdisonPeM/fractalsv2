@@ -12,17 +12,36 @@ const defaultLimits: { [key in FRACTALS]: limit } = {
   [FRACTALS.JULIA]: JULIA_DEFAULT,
 };
 
-// Change Limits to do zoom in-out
-export const LIMITS = clone(defaultLimits);
+const getHandler = (key: string) => ({
+  get(target: any, fractal: FRACTALS) {
+    const storagedProp = localStorage.getItem(key + fractal);
+    if (storagedProp) {
+      return JSON.parse(storagedProp);
+    }
+    return target[fractal];
+  },
+  set(target: any, fractal: FRACTALS, value: limit) {
+    localStorage.setItem(key + fractal, JSON.stringify(value));
+    target[fractal] = value;
+    return true;
+  },
+});
+
+const defaultLimitsProxy = new Proxy(
+  defaultLimits,
+  getHandler('DefaultLimit-')
+);
+export const LIMITS = new Proxy(clone(defaultLimits), getHandler('Limit-'));
+
 export function configLimits(method: METHODS) {
   if (method === METHODS.SQUARE) {
-    defaultLimits[FRACTALS.MANDELBROT] = INITIAL_LIMITS;
+    defaultLimitsProxy[FRACTALS.MANDELBROT] = INITIAL_LIMITS;
   } else {
-    defaultLimits[FRACTALS.MANDELBROT] = GENERAL_LIMITS;
+    defaultLimitsProxy[FRACTALS.MANDELBROT] = GENERAL_LIMITS;
   }
 
   Object.values(FRACTALS).forEach(fractal => {
-    LIMITS[fractal] = defaultLimits[FRACTALS.JULIA];
+    LIMITS[fractal] = defaultLimitsProxy[fractal];
   });
 }
 
@@ -32,7 +51,7 @@ export function zoom(
   scale: number = 1
 ): { newLimit: limit; newValue: complex | null } {
   if (scale === 0) {
-    LIMITS[fractal] = defaultLimits[fractal];
+    LIMITS[fractal] = defaultLimitsProxy[fractal];
     return {
       newLimit: LIMITS[fractal],
       newValue: null,

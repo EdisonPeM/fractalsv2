@@ -2,7 +2,7 @@ import { onChange } from './listeners';
 import { restartZoomLevels } from './zoomController';
 import { FRACTALS, METHODS } from '@Constants';
 
-import { getCurrentFractal, runDraw } from '@Controller';
+import { runDraw } from '@Controller';
 import { changeColors, changeMethod } from '@Model';
 import { LIMITS } from '@Model/Managers/zoomManager';
 
@@ -27,4 +27,7 @@ export function addOptionListeners() {
     restartZoomLevels();
     runDraw();
   });
+
+  updateParam_a(LIMITS[FRACTALS.MANDELBROT].x);
+  updateParam_b(LIMITS[FRACTALS.MANDELBROT].y);
 }

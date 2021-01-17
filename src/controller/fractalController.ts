@@ -8,7 +8,7 @@ import { juliaBtn, mandelbrotBtn } from '@View/Elements/runButtons';
 
 import { drawAxis, eraseAxis } from '@Model';
 
-let showAxis = true;
+let showAxis = Boolean(+(localStorage.getItem('hideAxis') || 1));
 export function addInputsListeners() {
   onClick(mandelbrotBtn, () => {
     setCurrentFractal(FRACTALS.MANDELBROT);
