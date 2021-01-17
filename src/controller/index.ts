@@ -10,8 +10,10 @@ import { showZoomLevel } from '@View/Elements/zoomControls';
 import { draw, onDone } from '@Model';
 
 // Handler of Fractal mode
-let currentFractal = FRACTALS.MANDELBROT;
+const storagedFractal = localStorage.getItem('currentFractal') as FRACTALS;
+let currentFractal = storagedFractal || FRACTALS.MANDELBROT;
 export function setCurrentFractal(fractal: FRACTALS) {
+  localStorage.setItem('currentFractal', fractal);
   currentFractal = fractal;
 }
 export function getCurrentFractal(): FRACTALS {

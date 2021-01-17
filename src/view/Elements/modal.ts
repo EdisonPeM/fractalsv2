@@ -29,6 +29,9 @@ const mainElement = e('div') as HTMLElement;
 export const myGen = new GradientGenerator({ mainElement });
 const manager = new GeneratorManager({ generator: myGen, keepChanges: false });
 
+const colorsBase = localStorage.getItem('colorsBase');
+if (colorsBase) myGen.setGradientColors(JSON.parse(colorsBase));
+
 const observers: Function[] = [];
 export function onChangeColors(cb: Function) {
   observers.push(cb);
@@ -64,6 +67,7 @@ function closeModal() {
 }
 
 function acceptNewColors() {
+  localStorage.setItem('colorsBase', JSON.stringify(myGen.getGradientColors()));
   const colors = myGen.generateColors();
   observers.forEach(cb => cb(colors));
   manager.saveColors();

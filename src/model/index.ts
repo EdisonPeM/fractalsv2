@@ -25,12 +25,13 @@ function done(payload: any = true) {
 const myPainer: Painter = new Painter(myCanva);
 
 let workersFinished = 0;
+const storagedMethod = localStorage.getItem('method') as METHODS;
 export function initWorkers() {
   sendWorkerMessage({
     action: ACTIONS.INIT,
     payload: {
       threads,
-      method: METHODS.SQUARE,
+      method: storagedMethod || METHODS.SQUARE,
       width: myCanva.width,
       height: myCanva.height,
       colors: getColors(defaultColors),

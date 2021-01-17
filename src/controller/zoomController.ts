@@ -114,7 +114,7 @@ function changeZoom(center: coord) {
 
   // Re Draw
   runDraw();
-  restartZoomOp();
+  // restartZoomOp();
 }
 
 function restartZoomOp() {
