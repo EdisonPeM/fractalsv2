@@ -7,36 +7,46 @@ import { faPalette } from '@fortawesome/free-solid-svg-icons/faPalette';
 import 'gradient-generator-ui/dist/gradient-generator.css';
 import '../Assets/sass/modal.scss';
 
+// ------------------------------------------------------------------ //
+//                              Modal Element                         //
+// ------------------------------------------------------------------ //
 export const modal = e('div');
 modal.className = 'modal';
 
+// Open Modal Button
 export const openModalbtn = Button('Cambiar Colores ');
 openModalbtn.classList.add('btn-colors');
 openModalbtn.addEventListener('click', () => openModal());
 addIcon(openModalbtn, faPalette);
 
+// Modal Content
 const modalContent = e('div');
 modalContent.className = 'modal-content';
 modal.append(modalContent);
 
+// Close Modal Button
 const closeModalBtn = e('button');
 closeModalBtn.className = 'modal-close';
 closeModalBtn.innerHTML = '&times;';
 closeModalBtn.addEventListener('click', () => rejectNewColors());
 
+// ------------------------------------------------------------------ //
+//                           Colors Generator                         //
+// ------------------------------------------------------------------ //
 const mainElement = e('div') as HTMLElement;
-
-export const myGen = new GradientGenerator({ mainElement });
+const myGen = new GradientGenerator({ mainElement });
 const manager = new GeneratorManager({ generator: myGen, keepChanges: false });
 
-const colorsBase = localStorage.getItem('colorsBase');
-if (colorsBase) myGen.setGradientColors(JSON.parse(colorsBase));
+export function getGeneratedColors(): string[] {
+  return myGen.generateColors();
+}
 
 const observers: Function[] = [];
 export function onChangeColors(cb: Function) {
   observers.push(cb);
 }
 
+// Control Buttons
 const addBtn = Button('+');
 addBtn.classList.add('modal-add-btn');
 addBtn.classList.add('btn-colors');
@@ -52,8 +62,10 @@ modalContent.append(mainElement);
 modalContent.append(addBtn);
 modalContent.append(acceptBtn);
 
+// ------------------------------------------------------------------ //
+//                                Events                              //
+// ------------------------------------------------------------------ //
 let isModalOpen = false;
-//Eventos
 function openModal() {
   isModalOpen = true;
   modal.style.opacity = '1';
@@ -67,7 +79,6 @@ function closeModal() {
 }
 
 function acceptNewColors() {
-  localStorage.setItem('colorsBase', JSON.stringify(myGen.getGradientColors()));
   const colors = myGen.generateColors();
   observers.forEach(cb => cb(colors));
   manager.saveColors();
@@ -79,16 +90,12 @@ function rejectNewColors() {
   closeModal();
 }
 
+// ------------------------------------------------------------------ //
+//                      Keys Shortcuts Support                        //
+// ------------------------------------------------------------------ //
 document.addEventListener('keydown', e => {
-  if (isModalOpen && e.code === 'Escape') {
-    rejectNewColors();
-  }
-
-  if (isModalOpen && e.code === 'Enter') {
-    acceptNewColors();
-  }
-
-  if (isModalOpen && e.code === 'KeyN') {
-    manager.activateAddMode();
-  }
+  if (!isModalOpen) return;
+  if (e.code === 'Escape') rejectNewColors();
+  if (e.code === 'Enter') acceptNewColors();
+  if (e.code === 'KeyN') manager.activateAddMode();
 });
