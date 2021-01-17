@@ -11,6 +11,7 @@ hideAxisLabel.textContent = 'Mostrar el Eje';
 
 export const hideAxis = e('input');
 hideAxis.type = 'checkbox';
+hideAxis.defaultChecked = true;
 
 hideAxisContainer.append(hideAxis);
 hideAxisContainer.append(hideAxisLabel);

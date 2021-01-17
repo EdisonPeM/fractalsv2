@@ -99,10 +99,3 @@ function updateParam(
     updateOutput();
   };
 }
-
-export function getComplexInput(): complex {
-  return {
-    real: paramReal.valueAsNumber,
-    img: paramImg.valueAsNumber,
-  };
-}
