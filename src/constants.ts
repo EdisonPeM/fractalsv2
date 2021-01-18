@@ -29,9 +29,3 @@ export enum ZOOM_OPS {
   MOVE_POSITION = 'MOVE_POSITION',
   HOME = 'HOME',
 }
-
-// Basic Inputs Limits
-export const INITIAL_LIMITS: limit = {
-  x: [-2.5, 1],
-  y: [-1.75, 1.75],
-};

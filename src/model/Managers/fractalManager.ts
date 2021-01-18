@@ -1,4 +1,5 @@
-import { FRACTALS, INITIAL_LIMITS, METHODS } from '@Constants';
+import { FRACTALS, METHODS } from '@Constants';
+import { INITIAL_LIMITS, INITIAL_ZOOM } from '@InitialValues';
 import { removeFromCache } from '@Model/cache';
 import { colorPos } from 'gradient-generator-ui';
 
@@ -13,9 +14,9 @@ const fractalOptions = {
   complexNum: originComplex,
   showAxis: true,
   method: METHODS.SQUARE,
-  limits: INITIAL_LIMITS,
-  zoomLevel: 1,
+  zoomLevels: INITIAL_ZOOM,
   colors: [] as colorPos[],
+  limits: INITIAL_LIMITS,
 };
 
 // ------------------------------------------------------------------ //
@@ -66,25 +67,25 @@ export function getMethod(): METHODS {
 // ------------------------------------------------------------------ //
 //                           Zoom Level                               //
 // ------------------------------------------------------------------ //
-export function setZoomLevel(zoomLevel: number) {
+export function setZoomLevel(zoomLevels: { [key in FRACTALS]: number }) {
   removeFromCache('fractal');
-  fractalOptions.zoomLevel = zoomLevel;
+  fractalOptions.zoomLevels = zoomLevels;
 }
 
 export function getZoomLevel(): number {
-  return fractalOptions.zoomLevel;
+  return fractalOptions.zoomLevels[fractalOptions.fractal];
 }
 
 // ------------------------------------------------------------------ //
 //                           Zoom Limits                              //
 // ------------------------------------------------------------------ //
-export function setFractalLimits(limits: limit) {
+export function setFractalLimits(limits: { [key in FRACTALS]: limit }) {
   removeFromCache('fractal');
   fractalOptions.limits = limits;
 }
 
 export function getFractalLimits(): limit {
-  return fractalOptions.limits;
+  return fractalOptions.limits[fractalOptions.fractal];
 }
 
 // ------------------------------------------------------------------ //

@@ -1,10 +1,4 @@
-import { FRACTALS } from '@Constants';
-import { getLimits } from './limitsManager';
-import {
-  getComplexNum,
-  getCurrentFractal,
-  getFractalLimits,
-} from './fractalManager';
+import { getComplexNum, getFractalLimits } from './fractalManager';
 
 import Painter from '../Lib/Painter';
 import { myCanva } from '@View/Elements/canvas';
