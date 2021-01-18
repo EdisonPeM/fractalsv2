@@ -26,6 +26,7 @@ module.exports = (env, argv) => {
         '@Controller': path.resolve(__dirname, 'src', 'controller'),
         '@Model': path.resolve(__dirname, 'src', 'model'),
         '@Constants': path.resolve(__dirname, 'src', 'constants'),
+        '@InitialValues': path.resolve(__dirname, 'src', 'initialValues'),
       },
     },
     module: {
@@ -104,12 +105,7 @@ module.exports = (env, argv) => {
           plugins: [['optipng', { optimizationLevel: 5 }]],
         },
       }),
-      !isDevelop &&
-        new WorkboxWebpackPlugin.GenerateSW({
-          cleanupOutdatedCaches: true,
-          skipWaiting: false,
-          clientsClaim: true,
-        }),
+      !isDevelop && new WorkboxWebpackPlugin.GenerateSW(),
     ].filter(Boolean),
     devtool: isDevelop ? 'eval' : 'source-map',
     optimization: {

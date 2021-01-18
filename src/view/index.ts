@@ -1,15 +1,14 @@
 import { $, e } from './helpers';
 
+import { btnsContainer } from './Elements/runButtons';
 import {
   output,
-  container_parm_a,
-  container_parm_b,
-  // disabledInputs,
+  paramRealContainer,
+  paramImgContainer,
 } from './Elements/inputs';
-import { runBtns } from './Elements/runButtons';
-import { canvaDiv, showSpinner } from './Elements/canvas';
+import { canvaContainer, showSpinner } from './Elements/canvas';
+import { hideAxisContainer, selectMethodContainer } from './Elements/options';
 import { downloadBtn } from './Elements/downloadButton';
-import { hideAxisWrap, selectMethodWrap } from './Elements/options';
 import { modal, openModalbtn } from './Elements/modal';
 
 // Add Styles
@@ -18,37 +17,28 @@ import './Assets/sass/index.scss';
 // Main function to config the view
 export function initView() {
   const App = $('#app');
+  if (!App) return;
 
   // Main Canva containers
-  const canvaContainer = e('div');
-  canvaContainer.className = 'canva-container'; // GRID
-  canvaContainer.append(container_parm_a); // up Left
-  canvaContainer.append(e('div')); // down Left
-  canvaContainer.append(canvaDiv); // down Left
-  canvaContainer.append(container_parm_b); // down Right
+  const canvaGrid = e('div');
+  canvaGrid.className = 'canva-container'; // GRID
+  canvaGrid.append(paramRealContainer); // up Left
+  canvaGrid.append(e('div')); // down Left
+  canvaGrid.append(canvaContainer); // down Left
+  canvaGrid.append(paramImgContainer); // down Right
 
   // Add all components to the main view
-  if (App) {
-    App.append(runBtns);
-    App.append(e('hr'));
-    App.append(output);
-    App.append(canvaContainer);
-    //
-    App.append(selectMethodWrap);
-    App.append(hideAxisWrap);
-    App.append(e('br'));
-    App.append(downloadBtn);
-    App.append(openModalbtn);
-    App.append(modal);
-  }
+  App.append(btnsContainer);
+  App.append(e('hr'));
+  App.append(output);
+  App.append(canvaGrid);
+  App.append(selectMethodContainer);
+  App.append(hideAxisContainer);
+  App.append(e('br'));
+  App.append(downloadBtn);
+  App.append(openModalbtn);
+  App.append(modal);
 }
 
-export function blockView() {
-  showSpinner(true);
-  // disabledInputs(true);
-}
-
-export function unBlockView() {
-  showSpinner(false);
-  // disabledInputs(false);
-}
+export const blockView = () => showSpinner(true);
+export const unBlockView = () => showSpinner(false);

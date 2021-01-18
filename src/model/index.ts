@@ -1,136 +1,66 @@
-import Painter from './Lib/Painter';
-import { myCanva } from '@View/Elements/canvas';
-
-import { compareAndSave, saveInCache } from './cache';
-import { ACTIONS, FRACTALS, METHODS, ZOOM_OPS } from '@Constants';
-
+import { FRACTALS, METHODS } from '@Constants';
+import { compareAndSave } from './cache';
 import {
   sendWorkerMessage,
   onWorkerMessage,
   threads,
 } from './Managers/workersManager';
-import { configLimits, LIMITS, zoom } from './Managers/zoomManager';
-import { getColors, defaultColors } from './Managers/colorManager';
+import { drawFragment, saveDrawing } from './Managers/drawManager';
+import {
+  getCurrentFractal,
+  getComplexNum,
+  getMethod,
+  getFractalLimits,
+} from './Managers/fractalManager';
+import { getFractalColors } from './Managers/colorManager';
 
-// Add Event Listeners with Observer Pattern
-const observers: Array<Function> = [];
-export function onDone(cb: Function) {
-  observers.push(cb);
-}
-function done(payload: any = true) {
-  observers.forEach(cb => cb(payload));
-}
+import { done } from '@Controller';
+import { myCanva } from '@View/Elements/canvas';
 
-// Canva manipulator
-const myPainer: Painter = new Painter(myCanva);
-
+// ------------------------------------------------------------------ //
+//                       Worker Listener                              //
+// ------------------------------------------------------------------ //
 let workersFinished = 0;
-const storagedMethod = localStorage.getItem('method') as METHODS;
 export function initWorkers() {
-  sendWorkerMessage({
-    action: ACTIONS.INIT,
-    payload: {
-      threads,
-      method: storagedMethod || METHODS.SQUARE,
-      width: myCanva.width,
-      height: myCanva.height,
-      colors: getColors(defaultColors),
-    },
-  });
-
   onWorkerMessage((payload: any) => {
     const { imgData, min } = payload;
-    myPainer.drawFragment(imgData, min);
+    drawFragment(imgData, min);
 
     workersFinished++;
     if (workersFinished === threads) {
-      myPainer.saveInCache();
+      saveDrawing();
       done();
     }
   });
 }
 
-// Main function
-export function draw(fractal: FRACTALS, c: complex) {
+// ------------------------------------------------------------------ //
+//                          Run function                              //
+// ------------------------------------------------------------------ //
+export function run() {
+  const fractal: FRACTALS = getCurrentFractal();
+  const complexNum: complex = getComplexNum();
+
   const fractalChanged = compareAndSave('fractal', fractal);
-  const realChanged = compareAndSave('c.real', c.real);
-  const imgChanged = compareAndSave('c.img', c.img);
+  const realChanged = compareAndSave('c.real', complexNum.real);
+  const imgChanged = compareAndSave('c.img', complexNum.img);
+
   if (!fractalChanged && !realChanged && !imgChanged) return done();
+
+  const { width, height } = myCanva;
+  const colors: colorRGB[] = getFractalColors();
+  const limits: limit = getFractalLimits();
+  const method: METHODS = getMethod();
 
   workersFinished = 0;
   sendWorkerMessage({
-    action: ACTIONS.CALCULATE,
-    payload: {
-      fractal,
-      limits: LIMITS[fractal],
-      complexNum: c,
-    },
+    width,
+    height,
+    threads,
+    method,
+    colors,
+    fractal,
+    limits,
+    complexNum,
   });
-}
-
-export function changeColors(colors: string[]) {
-  saveInCache('fractal', null);
-  sendWorkerMessage({
-    action: ACTIONS.CHANGE_COLORS,
-    payload: {
-      colors: getColors(colors),
-    },
-  });
-}
-
-export function changeMethod(method: METHODS) {
-  saveInCache('fractal', null);
-  configLimits(method);
-  sendWorkerMessage({
-    action: ACTIONS.CHANGE_METHOD,
-    payload: {
-      method,
-    },
-  });
-}
-
-export function drawAxis(fractal: FRACTALS, c: complex) {
-  const limits = LIMITS[fractal];
-  const [minX, maxX] = limits.x;
-  const [minY, maxY] = limits.y;
-
-  const posX = c.real - minX;
-  const posY = c.img - minY;
-  const Dx = maxX - minX;
-  const Dy = maxY - minY;
-
-  myPainer.drawAxis(posX, posY, Dx, Dy);
-}
-
-export function eraseAxis() {
-  myPainer.drawAxis(0, 0, 0, 0);
-}
-
-export function handleZoom(
-  fractalOnZoom: FRACTALS,
-  zoomAction: ZOOM_OPS,
-  center: coord
-) {
-  // calculate the mapping of the coord
-  saveInCache('fractal', null);
-  switch (zoomAction) {
-    case ZOOM_OPS.ZOOM_IN: {
-      return zoom(fractalOnZoom, center, 0.5);
-    }
-
-    case ZOOM_OPS.ZOOM_OUT: {
-      return zoom(fractalOnZoom, center, 2);
-    }
-
-    case ZOOM_OPS.MOVE_POSITION: {
-      return zoom(fractalOnZoom, center, 1);
-    }
-
-    case ZOOM_OPS.HOME: {
-      return zoom(fractalOnZoom, center, 0);
-    }
-
-    default:
-      return null;
-  }
 }

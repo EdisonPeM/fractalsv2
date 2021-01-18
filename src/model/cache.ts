@@ -4,6 +4,10 @@ export function saveInCache(key: string, value: any) {
   CACHE[key] = value;
 }
 
+export function removeFromCache(key: string) {
+  delete CACHE[key];
+}
+
 export function hasChanged(key: string, value: any): boolean {
   return CACHE[key] === undefined || CACHE[key] !== value;
 }

@@ -1,50 +1,46 @@
 import { Button } from '@View/Components/Button';
 import { addIcon, e } from '@View/helpers';
-import { GradientGenerator, GeneratorManager } from 'gradient-generator-ui';
 
 import { faPalette } from '@fortawesome/free-solid-svg-icons/faPalette';
 
-import 'gradient-generator-ui/dist/gradient-generator.css';
 import '../Assets/sass/modal.scss';
 
+// ------------------------------------------------------------------ //
+//                              Modal Element                         //
+// ------------------------------------------------------------------ //
 export const modal = e('div');
 modal.className = 'modal';
 
+// Open Modal Button
 export const openModalbtn = Button('Cambiar Colores ');
 openModalbtn.classList.add('btn-colors');
 openModalbtn.addEventListener('click', () => openModal());
 addIcon(openModalbtn, faPalette);
 
+// Modal Content
 const modalContent = e('div');
 modalContent.className = 'modal-content';
 modal.append(modalContent);
 
-const closeModalBtn = e('button');
+// Close Modal Button
+export const closeModalBtn = e('button');
 closeModalBtn.className = 'modal-close';
 closeModalBtn.innerHTML = '&times;';
-closeModalBtn.addEventListener('click', () => rejectNewColors());
+closeModalBtn.addEventListener('click', () => closeModal());
 
-const mainElement = e('div') as HTMLElement;
+// ------------------------------------------------------------------ //
+//                           Colors Generator                         //
+// ------------------------------------------------------------------ //
+export const mainElement = e('div') as HTMLElement;
 
-export const myGen = new GradientGenerator({ mainElement });
-const manager = new GeneratorManager({ generator: myGen, keepChanges: false });
-
-const colorsBase = localStorage.getItem('colorsBase');
-if (colorsBase) myGen.setGradientColors(JSON.parse(colorsBase));
-
-const observers: Function[] = [];
-export function onChangeColors(cb: Function) {
-  observers.push(cb);
-}
-
-const addBtn = Button('+');
+// Control Buttons
+export const addBtn = Button('+');
 addBtn.classList.add('modal-add-btn');
 addBtn.classList.add('btn-colors');
-addBtn.addEventListener('click', () => manager.activateAddMode());
 
-const acceptBtn = Button('ok');
+export const acceptBtn = Button('ok');
 acceptBtn.classList.add('modal-accept-btn');
-acceptBtn.addEventListener('click', () => acceptNewColors());
+acceptBtn.addEventListener('click', () => closeModal());
 
 // Append Elements to the modal
 modalContent.append(closeModalBtn);
@@ -52,43 +48,15 @@ modalContent.append(mainElement);
 modalContent.append(addBtn);
 modalContent.append(acceptBtn);
 
-let isModalOpen = false;
-//Eventos
-function openModal() {
-  isModalOpen = true;
+// ------------------------------------------------------------------ //
+//                                Events                              //
+// ------------------------------------------------------------------ //
+export function openModal() {
   modal.style.opacity = '1';
   modal.style.top = '0';
 }
 
-function closeModal() {
-  isModalOpen = false;
+export function closeModal() {
   modal.style.top = '100%';
   modal.style.opacity = '0';
 }
-
-function acceptNewColors() {
-  localStorage.setItem('colorsBase', JSON.stringify(myGen.getGradientColors()));
-  const colors = myGen.generateColors();
-  observers.forEach(cb => cb(colors));
-  manager.saveColors();
-  closeModal();
-}
-
-function rejectNewColors() {
-  manager.restoreColors();
-  closeModal();
-}
-
-document.addEventListener('keydown', e => {
-  if (isModalOpen && e.code === 'Escape') {
-    rejectNewColors();
-  }
-
-  if (isModalOpen && e.code === 'Enter') {
-    acceptNewColors();
-  }
-
-  if (isModalOpen && e.code === 'KeyN') {
-    manager.activateAddMode();
-  }
-});
