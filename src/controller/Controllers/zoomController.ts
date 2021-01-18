@@ -4,7 +4,7 @@ import { onClick } from '@Controller/listeners';
 
 import {
   getCurrentFractal,
-  getFractalLimits,
+  getFractalLimit,
   getZoomLevel,
   setComplexNum,
 } from '@Model/Managers/fractalManager';
@@ -67,7 +67,7 @@ export function addZoomListeners() {
 //              Config Inputs values, Limits and Zoom                 //
 // ------------------------------------------------------------------ //
 export function configInputs(newInputsValues: complex) {
-  const newLimit = getFractalLimits();
+  const newLimit = getFractalLimit(FRACTALS.MANDELBROT);
   updateParamReal(newLimit.x, newInputsValues.real);
   updateParamImg(newLimit.y, newInputsValues.img);
 }

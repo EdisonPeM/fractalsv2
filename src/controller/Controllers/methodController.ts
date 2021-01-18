@@ -28,7 +28,6 @@ export function addMethodListener() {
     configInputs(currentComplex);
 
     restartZoom();
-
     runDraw();
   });
 }

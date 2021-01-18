@@ -6,6 +6,7 @@ import {
   INITIAL_VALUES,
   INITIAL_ZOOM,
   INITIAL_FRACTAL,
+  INITIAL_COLORS,
 } from '@InitialValues';
 import { removeFromCache } from '@Model/cache';
 import { handler } from '@Model/Lib/ParserOptions';
@@ -18,7 +19,7 @@ const fractalOptions = {
   method: INITIAL_METHOD,
   zoomLevels: INITIAL_ZOOM,
   limits: INITIAL_LIMITS,
-  colors: [],
+  colors: INITIAL_COLORS,
 };
 
 const optionsProxy = new Proxy(fractalOptions, handler);
@@ -91,14 +92,14 @@ export function getFractalLimits(): limit {
   return optionsProxy.limits[optionsProxy.fractal];
 }
 
+export function getFractalLimit(fractal: FRACTALS): limit {
+  return optionsProxy.limits[fractal];
+}
+
 // ------------------------------------------------------------------ //
 //                      Colors Base Object                            //
 // ------------------------------------------------------------------ //
 export function setColorsBase(colors: colorPos[]) {
   removeFromCache('fractal');
   optionsProxy.colors = colors;
-}
-
-export function getColorsBase(): colorPos[] {
-  return optionsProxy.colors;
 }
