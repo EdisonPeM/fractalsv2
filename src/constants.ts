@@ -1,24 +1,16 @@
 // Type of fractals
 export enum FRACTALS {
-  MANDELBROT = 'MANDELBROT',
-  JULIA = 'JULIA',
+  MANDELBROT = 'M',
+  JULIA = 'J',
 }
 
 // methods Availables
 export enum METHODS {
-  SQUARE = 'z = z^2 + c',
-  CUBIC = 'z = z^3 + c',
-  FOUR = 'z = z^4 + c',
-  TRICORN = 'z = conj(z)^2 + c',
-  SHIP = 'Buring Ship',
-}
-
-// Worker Actions
-export enum ACTIONS {
-  INIT = 'INIT',
-  CALCULATE = 'CALCULATE',
-  CHANGE_METHOD = 'CHANGE_METHOD',
-  CHANGE_COLORS = 'CHANGE_COLORS',
+  SQUARE = 'S',
+  CUBIC = 'C',
+  FOUR = 'F',
+  TRICORN = 'T',
+  SHIP = 'SH',
 }
 
 // Zoom and position options

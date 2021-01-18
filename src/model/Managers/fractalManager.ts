@@ -1,55 +1,58 @@
 import { FRACTALS, METHODS } from '@Constants';
-import { INITIAL_LIMITS, INITIAL_ZOOM } from '@InitialValues';
+import {
+  INITIAL_LIMITS,
+  INITIAL_METHOD,
+  INITIAL_SHOW_AXIS,
+  INITIAL_VALUES,
+  INITIAL_ZOOM,
+  INITIAL_FRACTAL,
+} from '@InitialValues';
 import { removeFromCache } from '@Model/cache';
+import { handler } from '@Model/Lib/ParserOptions';
 import { colorPos } from 'gradient-generator-ui';
 
-// Origin
-const originComplex: complex = {
-  real: 0,
-  img: 0,
-};
-
 const fractalOptions = {
-  fractal: FRACTALS.MANDELBROT,
-  complexNum: originComplex,
-  showAxis: true,
-  method: METHODS.SQUARE,
+  fractal: INITIAL_FRACTAL,
+  complex: INITIAL_VALUES,
+  showAxis: INITIAL_SHOW_AXIS,
+  method: INITIAL_METHOD,
   zoomLevels: INITIAL_ZOOM,
-  colors: [] as colorPos[],
   limits: INITIAL_LIMITS,
+  colors: [],
 };
 
+const optionsProxy = new Proxy(fractalOptions, handler);
 // ------------------------------------------------------------------ //
 //                        Current Fractal                             //
 // ------------------------------------------------------------------ //
 export function setCurrentFractal(fractal: FRACTALS) {
-  fractalOptions.fractal = fractal;
+  optionsProxy.fractal = fractal;
 }
 
 export function getCurrentFractal(): FRACTALS {
-  return fractalOptions.fractal;
+  return optionsProxy.fractal;
 }
 
 // ------------------------------------------------------------------ //
 //                         Inputs Values                              //
 // ------------------------------------------------------------------ //
 export function setComplexNum(c: complex) {
-  fractalOptions.complexNum = c;
+  optionsProxy.complex = c;
 }
 
 export function getComplexNum(): complex {
-  return fractalOptions.complexNum;
+  return optionsProxy.complex;
 }
 
 // ------------------------------------------------------------------ //
 //                            show Axis                               //
 // ------------------------------------------------------------------ //
 export function setShowAxis(showAxis: boolean) {
-  fractalOptions.showAxis = showAxis;
+  optionsProxy.showAxis = showAxis;
 }
 
 export function getShowAxis(): boolean {
-  return fractalOptions.showAxis;
+  return optionsProxy.showAxis;
 }
 
 // ------------------------------------------------------------------ //
@@ -57,11 +60,11 @@ export function getShowAxis(): boolean {
 // ------------------------------------------------------------------ //
 export function setMethod(method: METHODS) {
   removeFromCache('fractal');
-  fractalOptions.method = method;
+  optionsProxy.method = method;
 }
 
 export function getMethod(): METHODS {
-  return fractalOptions.method;
+  return optionsProxy.method;
 }
 
 // ------------------------------------------------------------------ //
@@ -69,11 +72,11 @@ export function getMethod(): METHODS {
 // ------------------------------------------------------------------ //
 export function setZoomLevel(zoomLevels: { [key in FRACTALS]: number }) {
   removeFromCache('fractal');
-  fractalOptions.zoomLevels = zoomLevels;
+  optionsProxy.zoomLevels = zoomLevels;
 }
 
 export function getZoomLevel(): number {
-  return fractalOptions.zoomLevels[fractalOptions.fractal];
+  return optionsProxy.zoomLevels[optionsProxy.fractal];
 }
 
 // ------------------------------------------------------------------ //
@@ -81,11 +84,11 @@ export function getZoomLevel(): number {
 // ------------------------------------------------------------------ //
 export function setFractalLimits(limits: { [key in FRACTALS]: limit }) {
   removeFromCache('fractal');
-  fractalOptions.limits = limits;
+  optionsProxy.limits = limits;
 }
 
 export function getFractalLimits(): limit {
-  return fractalOptions.limits[fractalOptions.fractal];
+  return optionsProxy.limits[optionsProxy.fractal];
 }
 
 // ------------------------------------------------------------------ //
@@ -93,9 +96,9 @@ export function getFractalLimits(): limit {
 // ------------------------------------------------------------------ //
 export function setColorsBase(colors: colorPos[]) {
   removeFromCache('fractal');
-  fractalOptions.colors = colors;
+  optionsProxy.colors = colors;
 }
 
 export function getColorsBase(): colorPos[] {
-  return fractalOptions.colors;
+  return optionsProxy.colors;
 }

@@ -1,4 +1,5 @@
 import { METHODS } from '@Constants';
+import { INITIAL_METHOD, INITIAL_SHOW_AXIS } from '@InitialValues';
 import { e } from '@View/helpers';
 
 import '../Assets/sass/options.scss';
@@ -11,7 +12,7 @@ hideAxisLabel.textContent = 'Mostrar el Eje';
 
 export const hideAxis = e('input');
 hideAxis.type = 'checkbox';
-hideAxis.defaultChecked = true;
+hideAxis.defaultChecked = INITIAL_SHOW_AXIS;
 
 hideAxisContainer.append(hideAxis);
 hideAxisContainer.append(hideAxisLabel);
@@ -26,9 +27,18 @@ selectMethodLabel.textContent = 'Seleccione un Metodo';
 selectMethodContainer.append(selectMethodLabel);
 selectMethodContainer.append(selectMethod);
 
+const optionsLabel = {
+  [METHODS.SQUARE]: 'z = z^2 + c',
+  [METHODS.CUBIC]: 'z = z^3 + c',
+  [METHODS.FOUR]: 'z = z^4 + c',
+  [METHODS.TRICORN]: 'z = conj(z)^2 + c',
+  [METHODS.SHIP]: 'Buring Ship',
+};
+
 Object.values(METHODS).forEach(method => {
   const optionEl = e('option');
-  optionEl.textContent = method;
+  optionEl.textContent = optionsLabel[method];
+  optionEl.selected = method === INITIAL_METHOD;
   optionEl.value = method;
   selectMethod.append(optionEl);
 });

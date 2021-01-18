@@ -2,6 +2,7 @@
 
 import { runDraw } from '@Controller';
 import { onClick } from '@Controller/listeners';
+import { INITIAL_COLORS } from '@InitialValues';
 import { setFractalColors } from '@Model/Managers/colorManager';
 import { setColorsBase } from '@Model/Managers/fractalManager';
 import {
@@ -19,7 +20,8 @@ import {
 import { GradientGenerator, GeneratorManager } from 'gradient-generator-ui';
 import 'gradient-generator-ui/dist/gradient-generator.css';
 
-const myGen = new GradientGenerator({ mainElement });
+const initialColors = INITIAL_COLORS.length > 0 ? INITIAL_COLORS : undefined;
+const myGen = new GradientGenerator({ mainElement, initialColors });
 const manager = new GeneratorManager({ generator: myGen, keepChanges: false });
 
 let isModalOpen = false;

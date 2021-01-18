@@ -91,7 +91,6 @@ function changeZoom(coord: coord) {
   }
 
   // Re Draw
-  updateZoomLevel();
   runDraw();
 }
 

@@ -1,4 +1,4 @@
-import { INITIAL_LIMITS } from '@InitialValues';
+import { DEFAULT_LIMITS, INITIAL_LIMITS, INITIAL_METHOD } from '@InitialValues';
 import { FRACTALS, METHODS } from '@Constants';
 
 import { clone } from '@Model/Lib/utils';
@@ -7,8 +7,8 @@ import { getCurrentFractal, setFractalLimits } from './fractalManager';
 // ------------------------------------------------------------------ //
 //                                                                    //
 // ------------------------------------------------------------------ //
-const defaultLimits = clone(INITIAL_LIMITS);
-const currentLimits = clone(defaultLimits);
+const defaultLimits = clone(DEFAULT_LIMITS);
+const currentLimits = clone(INITIAL_LIMITS);
 export function setLimit(fractal: FRACTALS, limits: limit) {
   currentLimits[fractal] = limits;
   setFractalLimits(currentLimits);
@@ -52,17 +52,12 @@ export function configNewLimits(center: coord, scale: number = 1): complex {
 // ------------------------------------------------------------------ //
 export function configDefaultLimits(method: METHODS) {
   if (method === METHODS.SQUARE) {
-    defaultLimits[FRACTALS.MANDELBROT] = INITIAL_LIMITS[FRACTALS.MANDELBROT];
+    defaultLimits[FRACTALS.MANDELBROT] = DEFAULT_LIMITS[FRACTALS.MANDELBROT];
   } else {
     defaultLimits[FRACTALS.MANDELBROT] = {
       x: [-1.75, 1.75],
       y: [-1.75, 1.75],
     };
   }
-
-  Object.values(FRACTALS).forEach(fractal => {
-    currentLimits[fractal] = defaultLimits[fractal];
-  });
-
-  setFractalLimits(currentLimits);
 }
+configDefaultLimits(INITIAL_METHOD);

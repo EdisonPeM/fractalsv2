@@ -3,7 +3,10 @@ import { addInputsListeners } from './Controllers/inputsController';
 import { addMethodListener } from './Controllers/methodController';
 import { addAxisListener, changeAxis } from './Controllers/axisController';
 import { addColorsListener } from './Controllers/colorsController';
-import { addZoomListeners } from './Controllers/zoomController';
+import {
+  addZoomListeners,
+  updateZoomLevel,
+} from './Controllers/zoomController';
 
 import { blockView, unBlockView } from '@View';
 import { run } from '@Model';
@@ -36,6 +39,9 @@ export function runDraw() {
     setTimeout(() => {
       if (!renderInProcess) blockView();
     }); // enqueue (1)
+
+    // Show Zoom Level
+    updateZoomLevel();
 
     // Run Logic
     run();

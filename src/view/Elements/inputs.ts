@@ -1,14 +1,17 @@
 import { e } from '../helpers';
 import { InputParam } from '../Components/InputParam';
 import { FRACTALS } from '@Constants';
-import { INITIAL_LIMITS } from '@InitialValues';
+import { INITIAL_LIMITS, INITIAL_VALUES } from '@InitialValues';
 
 import '../Assets/sass/inputs.scss';
 
 // ------------------------------------------------------------------ //
 //                           Input Param Real                         //
 // ------------------------------------------------------------------ //
-export const paramReal = InputParam(...INITIAL_LIMITS[FRACTALS.MANDELBROT].x);
+export const paramReal = InputParam(
+  ...INITIAL_LIMITS[FRACTALS.MANDELBROT].x,
+  INITIAL_VALUES.real
+);
 
 // Container
 export const paramRealContainer = e('div');
@@ -27,7 +30,10 @@ export const updateParamReal = updateParam(paramReal, paramRealContainer);
 // ------------------------------------------------------------------ //
 //                           Input Param Img                          //
 // ------------------------------------------------------------------ //
-export const paramImg = InputParam(...INITIAL_LIMITS[FRACTALS.MANDELBROT].y);
+export const paramImg = InputParam(
+  ...INITIAL_LIMITS[FRACTALS.MANDELBROT].y,
+  INITIAL_VALUES.img
+);
 
 // Container
 export const paramImgContainer = e('div');
