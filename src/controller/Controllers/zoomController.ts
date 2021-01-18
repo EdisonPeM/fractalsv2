@@ -98,31 +98,29 @@ function changeZoom(coord: coord) {
 // ------------------------------------------------------------------ //
 //                      Keys Shortcuts Support                        //
 // ------------------------------------------------------------------ //
-// let zoomInAction = false;
-// let zoomOutAction = false;
-// Add event on KeyPress
-//   document.addEventListener('keydown', e => {
-//     if (e.code === 'ControlLeft' || e.code === 'ControlRight') {
-//       zoomInAction = true;
-//     }
+let zoomInAction = false;
+let zoomOutAction = false;
+document.addEventListener('keydown', e => {
+  if (e.code === 'ControlLeft' || e.code === 'ControlRight') {
+    zoomInAction = true;
+  }
 
-//     if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
-//       zoomOutAction = true;
-//     }
+  if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+    zoomOutAction = true;
+  }
 
-//     if (zoomInAction && !zoomOutAction) setZoomOp(ZOOM_OPS.ZOOM_IN);
-//     if (!zoomInAction && zoomOutAction) setZoomOp(ZOOM_OPS.ZOOM_OUT);
-//     if (zoomInAction && zoomOutAction) setZoomOp(ZOOM_OPS.MOVE_POSITION);
-//   });
+  if (zoomInAction && !zoomOutAction) setZoomOp(ZOOM_OPS.ZOOM_IN);
+  if (!zoomInAction && zoomOutAction) setZoomOp(ZOOM_OPS.ZOOM_OUT);
+  if (zoomInAction && zoomOutAction) setZoomOp(ZOOM_OPS.MOVE_POSITION);
+});
 
-//   document.addEventListener('keyup', e => {
-//     if (e.code === 'ControlLeft' || e.code === 'ControlRight') {
-//       zoomInAction = false;
-//     }
-//     if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
-//       zoomOutAction = false;
-//     }
+document.addEventListener('keyup', e => {
+  if (e.code === 'ControlLeft' || e.code === 'ControlRight') {
+    zoomInAction = false;
+  }
+  if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+    zoomOutAction = false;
+  }
 
-//     if (!zoomInAction && !zoomOutAction) setZoomOp(ZOOM_OPS.NONE);
-//   });
-// }
+  if (!zoomInAction && !zoomOutAction) setZoomOp(ZOOM_OPS.NONE);
+});
