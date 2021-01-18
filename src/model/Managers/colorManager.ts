@@ -1,10 +1,12 @@
 import { normalizeHex } from 'gradient-generator-ui';
-import { myGen } from '@View/Elements/modal';
 
-export const defaultColors = myGen.generateColors();
+let fractalColors: colorRGB[] = [];
+export function setFractalColors(colors: string[]) {
+  fractalColors = colors.map(hexToRGb);
+}
 
-export function getColors(colors: string[]): colorRGB[] {
-  return colors.map(hexToRGb);
+export function getFractalColors(): colorRGB[] {
+  return fractalColors;
 }
 
 function hexToRGb(hex: string): colorRGB {

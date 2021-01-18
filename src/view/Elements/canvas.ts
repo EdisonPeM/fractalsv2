@@ -17,14 +17,11 @@ export function showSpinner(show: boolean) {
   spinner.style.display = show ? '' : 'none';
 }
 
-export const canvaDiv = e('div');
-canvaDiv.className = 'canva';
+export const canvaContainer = e('div');
+canvaContainer.className = 'canva';
 
-canvaDiv.append(myCanva);
-
-// controls
-canvaDiv.append(zoomControls);
-canvaDiv.append(zoomLevel);
-
-// spinner
-canvaDiv.append(spinner);
+// Add Elements
+canvaContainer.append(myCanva);
+canvaContainer.append(zoomControls);
+canvaContainer.append(zoomLevel);
+canvaContainer.append(spinner);

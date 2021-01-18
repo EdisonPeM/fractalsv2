@@ -5,15 +5,14 @@ import { myCanva } from './canvas';
 // Third Part Libraries
 import { faSearchPlus } from '@fortawesome/free-solid-svg-icons/faSearchPlus';
 import { faSearchMinus } from '@fortawesome/free-solid-svg-icons/faSearchMinus';
-// import { faArrowsAlt } from '@fortawesome/free-solid-svg-icons/faArrowsAlt';
 import { faCrosshairs } from '@fortawesome/free-solid-svg-icons/faCrosshairs';
 import { faHome } from '@fortawesome/free-solid-svg-icons/faHome';
 
 import '../Assets/sass/zoomControls.scss';
 
-export const zoomControls = e('div');
-zoomControls.className = 'zoom-controls';
-
+// ------------------------------------------------------------------ //
+//                              Controls                              //
+// ------------------------------------------------------------------ //
 export const zoomIn = controlButton();
 addIcon(zoomIn, faSearchPlus);
 zoomIn.title = 'Zoom in';
@@ -30,33 +29,42 @@ export const zoomHome = controlButton();
 addIcon(zoomHome, faHome);
 zoomHome.title = 'Reset Default Zoom';
 
-// Event to change canvas styles
-zoomIn.addEventListener('click', function () {
-  activeZoomControl(this);
-});
-zoomOut.addEventListener('click', function () {
-  activeZoomControl(this);
-});
-zoomPosition.addEventListener('click', function () {
-  activeZoomControl(this);
-});
-zoomHome.addEventListener('click', () => {
-  activeZoomControl();
-});
+// Container of Zoom Controls
+export const zoomControls = e('div');
+zoomControls.className = 'zoom-controls';
+zoomControls.append(zoomIn);
+zoomControls.append(zoomOut);
+zoomControls.append(zoomPosition);
+zoomControls.append(zoomHome);
 
+// ------------------------------------------------------------------ //
+//                              Listeners                             //
+// ------------------------------------------------------------------ //
+zoomIn.addEventListener('click', () => activeZoomControl(zoomIn));
+zoomOut.addEventListener('click', () => activeZoomControl(zoomOut));
+zoomPosition.addEventListener('click', () => activeZoomControl(zoomPosition));
+zoomHome.addEventListener('click', () => activeZoomControl());
+
+// ------------------------------------------------------------------ //
+//                                Events                              //
+// ------------------------------------------------------------------ //
 export function activeZoomControl(control?: HTMLElement) {
   zoomIn.classList.remove('active');
   zoomOut.classList.remove('active');
   zoomPosition.classList.remove('active');
   zoomHome.classList.remove('active');
-  myCanva.className = '';
 
   if (control) {
     myCanva.className = 'crosshair';
     control.classList.add('active');
+  } else {
+    myCanva.className = '';
   }
 }
 
+// ------------------------------------------------------------------ //
+//                      Keys Shortcuts Support                        //
+// ------------------------------------------------------------------ //
 let zoomInAction = false;
 let zoomOutAction = false;
 document.addEventListener('keydown', e => {
@@ -84,13 +92,9 @@ document.addEventListener('keyup', e => {
   if (!zoomInAction && !zoomOutAction) activeZoomControl();
 });
 
-// Container of Zoom Controls
-zoomControls.append(zoomIn);
-zoomControls.append(zoomOut);
-zoomControls.append(zoomPosition);
-zoomControls.append(zoomHome);
-
-// Zoom Level Watcher
+// ------------------------------------------------------------------ //
+//                         Zoom Level Watcher                         //
+// ------------------------------------------------------------------ //
 export const zoomLevel = e('div');
 zoomLevel.className = 'zoom-level';
 

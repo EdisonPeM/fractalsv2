@@ -9,7 +9,7 @@ const workers: Array<Worker> = [...Array(threads)].map(
 // Helper
 export function sendWorkerMessage(data: any) {
   workers.forEach((worker, id) => {
-    data.payload.id = id;
+    data.id = id;
     worker.postMessage(data);
   });
 }
