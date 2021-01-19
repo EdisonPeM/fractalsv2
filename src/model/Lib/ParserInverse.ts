@@ -9,6 +9,8 @@ const stringToColors = (color: string) =>
     };
   });
 
+const stringToLimits = (str: string): number[] => str.split('_').map(v => +v);
+
 export const inverseHandler = {
   get(target: any, prop: any) {
     if (prop === 'fractal') {
@@ -40,26 +42,17 @@ export const inverseHandler = {
     }
 
     if (prop === 'limits') {
-      if (
-        !target.has('lmxm') ||
-        !target.has('lmxM') ||
-        !target.has('lmym') ||
-        !target.has('lmyM') ||
-        !target.has('ljxm') ||
-        !target.has('ljxM') ||
-        !target.has('ljym') ||
-        !target.has('ljyM')
-      )
-        return null;
+      const limitsParams = ['lmx', 'lmy', 'ljx', 'ljy'];
+      if (limitsParams.map(k => target.has(k)).includes(false)) return null;
 
       return {
         [FRACTALS.MANDELBROT]: {
-          x: [+target.get('lmxm'), +target.get('lmxM')],
-          y: [+target.get('lmym'), +target.get('lmyM')],
+          x: stringToLimits(target.get('lmx')),
+          y: stringToLimits(target.get('lmy')),
         },
         [FRACTALS.JULIA]: {
-          x: [+target.get('ljxm'), +target.get('ljxM')],
-          y: [+target.get('ljym'), +target.get('ljyM')],
+          x: stringToLimits(target.get('ljx')),
+          y: stringToLimits(target.get('ljy')),
         },
       };
     }

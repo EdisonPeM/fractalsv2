@@ -1,3 +1,4 @@
+import { FRACTALS } from '@Constants';
 import {
   INITIAL_COLORS,
   INITIAL_FRACTAL,
@@ -15,22 +16,21 @@ const colorsToString = (color: string) =>
     .replace(/},{/g, ' ')
     .replace(/,/g, '_');
 
+const limitToString = (nums: [number, number]): string =>
+  nums.map((v: number) => +v.toFixed(10)).join('_');
+
 export const fractalOptionsParams = {
   f: `${INITIAL_FRACTAL}`,
   pr: `${+INITIAL_VALUES.real.toFixed(10)}`,
   pi: `${+INITIAL_VALUES.img.toFixed(10)}`,
   a: `${+INITIAL_SHOW_AXIS}`,
   m: `${INITIAL_METHOD}`,
-  zM: `${INITIAL_ZOOM.M}`,
-  zJ: `${INITIAL_ZOOM.J}`,
-  lmxm: `${+INITIAL_LIMITS.M.x[0].toFixed(10)}`,
-  lmxM: `${+INITIAL_LIMITS.M.x[1].toFixed(10)}`,
-  lmym: `${+INITIAL_LIMITS.M.y[0].toFixed(10)}`,
-  lmyM: `${+INITIAL_LIMITS.M.y[1].toFixed(10)}`,
-  ljxm: `${+INITIAL_LIMITS.J.x[0].toFixed(10)}`,
-  ljxM: `${+INITIAL_LIMITS.J.x[1].toFixed(10)}`,
-  ljym: `${+INITIAL_LIMITS.J.y[0].toFixed(10)}`,
-  ljyM: `${+INITIAL_LIMITS.J.y[1].toFixed(10)}`,
+  zM: `${INITIAL_ZOOM[FRACTALS.MANDELBROT]}`,
+  zJ: `${INITIAL_ZOOM[FRACTALS.JULIA]}`,
+  lmx: limitToString(INITIAL_LIMITS[FRACTALS.MANDELBROT].x),
+  lmy: limitToString(INITIAL_LIMITS[FRACTALS.MANDELBROT].y),
+  ljx: limitToString(INITIAL_LIMITS[FRACTALS.JULIA].x),
+  ljy: limitToString(INITIAL_LIMITS[FRACTALS.JULIA].y),
   c: colorsToString(JSON.stringify(INITIAL_COLORS)),
 };
 
@@ -40,7 +40,7 @@ export const handler = {
     localStorage.setItem(prop, JSON.stringify(value));
 
     if (prop === 'fractal') {
-      fractalOptionsParams['f'] = `(${value})`;
+      fractalOptionsParams['f'] = `${value}`;
     }
 
     if (prop === 'complex') {
@@ -66,19 +66,10 @@ export const handler = {
     }
 
     if (prop === 'limits') {
-      const [lmxm, lmxM] = value.M.x;
-      const [lmym, lmyM] = value.M.y;
-      fractalOptionsParams['lmxm'] = `${+lmxm.toFixed(10)}`;
-      fractalOptionsParams['lmxM'] = `${+lmxM.toFixed(10)}`;
-      fractalOptionsParams['lmym'] = `${+lmym.toFixed(10)}`;
-      fractalOptionsParams['lmyM'] = `${+lmyM.toFixed(10)}`;
-
-      const [ljxm, ljxM] = value.J.x;
-      const [ljym, ljyM] = value.J.y;
-      fractalOptionsParams['ljxm'] = `${+ljxm.toFixed(10)}`;
-      fractalOptionsParams['ljxM'] = `${+ljxM.toFixed(10)}`;
-      fractalOptionsParams['ljym'] = `${+ljym.toFixed(10)}`;
-      fractalOptionsParams['ljyM'] = `${+ljyM.toFixed(10)}`;
+      fractalOptionsParams['lmx'] = limitToString(value[FRACTALS.MANDELBROT].x);
+      fractalOptionsParams['lmy'] = limitToString(value[FRACTALS.MANDELBROT].y);
+      fractalOptionsParams['ljx'] = limitToString(value[FRACTALS.JULIA].x);
+      fractalOptionsParams['ljy'] = limitToString(value[FRACTALS.JULIA].y);
     }
 
     navigate(fractalOptionsParams);

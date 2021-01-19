@@ -1,5 +1,6 @@
 import { FRACTALS, METHODS } from '@Constants';
 import { inverseHandler } from '@Model/Lib/ParserInverse';
+import { colorPos } from 'gradient-generator-ui';
 
 // ------------------------------------------------------------------ //
 //                         DEFAULT VALUES                             //
@@ -34,7 +35,7 @@ const urlParams = new Proxy(searchParams, inverseHandler);
 // ------------------------------------------------------------------ //
 //                         INITIAL VALUES                             //
 // ------------------------------------------------------------------ //
-export const INITIAL_FRACTAL =
+export const INITIAL_FRACTAL: FRACTALS =
   urlParams['fractal'] ||
   JSON.parse(
     localStorage.getItem('fractal') || JSON.stringify(FRACTALS.MANDELBROT)
@@ -44,11 +45,11 @@ export const INITIAL_VALUES: complex =
   urlParams['complex'] ||
   JSON.parse(localStorage.getItem('params') || JSON.stringify(ORIGIN));
 
-export const INITIAL_METHOD =
+export const INITIAL_METHOD: METHODS =
   urlParams['method'] ||
   JSON.parse(localStorage.getItem('method') || JSON.stringify(METHODS.SQUARE));
 
-export const INITIAL_SHOW_AXIS =
+export const INITIAL_SHOW_AXIS: boolean =
   urlParams['showAxis'] ||
   JSON.parse(localStorage.getItem('showAxis') || 'true');
 
@@ -56,14 +57,12 @@ export const INITIAL_LIMITS: { [key in FRACTALS]: limit } =
   urlParams['limits'] ||
   JSON.parse(localStorage.getItem('limits') || JSON.stringify(DEFAULT_LIMITS));
 
-console.log(INITIAL_LIMITS);
-
 export const INITIAL_ZOOM: { [key in FRACTALS]: number } =
   urlParams['zoomLevels'] ||
   JSON.parse(
     localStorage.getItem('zoomLevels') || JSON.stringify(DEFAULT_ZOOM)
   );
 
-export const INITIAL_COLORS =
+export const INITIAL_COLORS: colorPos[] =
   urlParams['colors'] ||
   JSON.parse(localStorage.getItem('colors') || JSON.stringify([]));
