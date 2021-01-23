@@ -7,6 +7,7 @@ import {
   addZoomListeners,
   updateZoomLevel,
 } from './Controllers/zoomController';
+import { addShareListener } from './Controllers/shareController';
 
 import { blockView, unBlockView } from '@View';
 import { run } from '@Model';
@@ -29,6 +30,9 @@ export function addListeners() {
 
   // Listener on Zoom
   addZoomListeners();
+
+  // add listeners on Share Buttons
+  addShareListener();
 }
 
 let renderInProcess = false;
