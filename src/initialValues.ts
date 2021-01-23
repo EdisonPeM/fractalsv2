@@ -32,37 +32,35 @@ export const ORIGIN: complex = {
 const searchParams = new URLSearchParams(location.search);
 const urlParams = new Proxy(searchParams, inverseHandler);
 
+const getInitialValue = (initialKey: string, fallbak: any) =>
+  urlParams[initialKey] ||
+  JSON.parse(localStorage.getItem(initialKey) || JSON.stringify(fallbak));
+
 // ------------------------------------------------------------------ //
 //                         INITIAL VALUES                             //
 // ------------------------------------------------------------------ //
-export const INITIAL_FRACTAL: FRACTALS =
-  urlParams['fractal'] ||
-  JSON.parse(
-    localStorage.getItem('fractal') || JSON.stringify(FRACTALS.MANDELBROT)
-  );
+export const INITIAL_FRACTAL: FRACTALS = getInitialValue(
+  'fractal',
+  FRACTALS.MANDELBROT
+);
 
-export const INITIAL_VALUES: complex =
-  urlParams['complex'] ||
-  JSON.parse(localStorage.getItem('params') || JSON.stringify(ORIGIN));
+export const INITIAL_VALUES: complex = getInitialValue('complex', ORIGIN);
 
-export const INITIAL_METHOD: METHODS =
-  urlParams['method'] ||
-  JSON.parse(localStorage.getItem('method') || JSON.stringify(METHODS.SQUARE));
+export const INITIAL_METHOD: METHODS = getInitialValue(
+  'method',
+  METHODS.SQUARE
+);
 
-export const INITIAL_SHOW_AXIS: boolean =
-  urlParams['showAxis'] ||
-  JSON.parse(localStorage.getItem('showAxis') || 'true');
+export const INITIAL_SHOW_AXIS: boolean = getInitialValue('showAxis', true);
 
-export const INITIAL_LIMITS: { [key in FRACTALS]: limit } =
-  urlParams['limits'] ||
-  JSON.parse(localStorage.getItem('limits') || JSON.stringify(DEFAULT_LIMITS));
+export const INITIAL_LIMITS: { [key in FRACTALS]: limit } = getInitialValue(
+  'limits',
+  DEFAULT_LIMITS
+);
 
-export const INITIAL_ZOOM: { [key in FRACTALS]: number } =
-  urlParams['zoomLevels'] ||
-  JSON.parse(
-    localStorage.getItem('zoomLevels') || JSON.stringify(DEFAULT_ZOOM)
-  );
+export const INITIAL_ZOOM: { [key in FRACTALS]: number } = getInitialValue(
+  'zoomLevels',
+  DEFAULT_ZOOM
+);
 
-export const INITIAL_COLORS: colorPos[] =
-  urlParams['colors'] ||
-  JSON.parse(localStorage.getItem('colors') || JSON.stringify([]));
+export const INITIAL_COLORS: colorPos[] = getInitialValue('colors', []);
