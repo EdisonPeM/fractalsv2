@@ -11,14 +11,14 @@
   outline: none;
 
   cursor: pointer;
-}
 
-.btn:hover {
-  background-color: hsl(229, 90%, 45%);
-}
+  &:hover {
+    background-color: hsl(229, 90%, 45%);
+  }
 
-.btn:active {
-  background-color: hsl(229, 90%, 35%);
+  &:active {
+    background-color: hsl(229, 90%, 35%);
+  }
 }
 
 .btn:focus,
@@ -29,24 +29,44 @@ input[type='range']:focus {
 
 .btn-random {
   background-color: hsl(39, 90%, 55%);
-}
 
-.btn-random:hover {
-  background-color: hsl(39, 90%, 45%);
-}
+  &:hover {
+    background-color: hsl(39, 90%, 45%);
+  }
 
-.btn-random:active {
-  background-color: hsl(39, 90%, 35%);
+  &:active {
+    background-color: hsl(39, 90%, 35%);
+  }
 }
 
 .btn-colors {
   background-color: hsl(118, 80%, 50%);
+
+  &:hover {
+    background-color: hsl(118, 80%, 40%);
+  }
+
+  &:active {
+    background-color: hsl(118, 80%, 30%);
+  }
 }
 
-.btn-colors:hover {
-  background-color: hsl(118, 80%, 40%);
-}
+.btn-share {
+  display: inline-block;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 1.2em;
 
-.btn-colors:active {
-  background-color: hsl(118, 80%, 30%);
+  opacity: 0.9;
+
+  &:active,
+  &:hover {
+    opacity: 1;
+    color: #101010;
+  }
+
+  &:link,
+  &:visited {
+    color: inherit;
+  }
 }

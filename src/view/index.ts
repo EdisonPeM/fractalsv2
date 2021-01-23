@@ -10,6 +10,7 @@ import { canvaContainer, showSpinner } from './Elements/canvas';
 import { hideAxisContainer, selectMethodContainer } from './Elements/options';
 import { downloadBtn } from './Elements/downloadButton';
 import { modal, openModalbtn } from './Elements/modal';
+import { shareButtonsContainer } from './Elements/shareButtons';
 
 // Add Styles
 import './Assets/sass/index.scss';
@@ -37,6 +38,7 @@ export function initView() {
   App.append(e('br'));
   App.append(downloadBtn);
   App.append(openModalbtn);
+  App.append(shareButtonsContainer);
   App.append(modal);
 }
 
