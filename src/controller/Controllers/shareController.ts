@@ -1,3 +1,4 @@
+import { registerShare } from '../../googleAnalytics';
 import { onClick } from '@Controller/listeners';
 import {
   shareTelegram,
@@ -20,32 +21,38 @@ export function addShareListener() {
   const breakLine = encodeURIComponent('\n\n');
 
   onClick(shareWhatsapp, () => {
+    registerShare('whatsapp');
     shareWhatsapp.href = `https://api.whatsapp.com/send?text=${
       mensaje + breakLine + getEncodeURL()
     }`;
   });
 
   onClick(shareTelegram, () => {
+    registerShare('telegram');
     shareTelegram.href = `https://t.me/share/url?url=${getEncodeURL()}&text=${
       breakLine + mensaje
     }`;
   });
 
   onClick(shareFacebook, () => {
+    registerShare('facebook');
     shareFacebook.href = `https://www.facebook.com/sharer/sharer.php?u=${getEncodeURL()}`;
   });
 
   onClick(shareTwitter, () => {
+    registerShare('twitter');
     shareTwitter.href = `https://twitter.com/intent/tweet?text=${
       mensaje + breakLine + getEncodeURL()
     }`;
   });
 
   onClick(shareMail, () => {
+    registerShare('email');
     shareMail.href = `mailto:?subject=${mensaje + breakLine + getEncodeURL()}`;
   });
 
   onClick(shareCopy, (ev: MouseEvent) => {
+    registerShare('clipboard');
     ev.preventDefault();
 
     const el = document.createElement('textarea');
