@@ -11,8 +11,8 @@ export const registerShare = (method: string) => {
 
 export const registerDownload = () => {
   const gtag = window.gtag;
-  gtag('event', 'download', {
-    content_type: 'fractal',
+  gtag('event', 'file_download', {
+    content_type: 'image/png',
     item_id: location.search,
   });
 };
