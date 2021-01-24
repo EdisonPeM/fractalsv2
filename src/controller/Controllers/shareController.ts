@@ -41,8 +41,8 @@ export function addShareListener() {
 
   onClick(shareTwitter, () => {
     registerShare('twitter');
-    shareTwitter.href = `https://twitter.com/intent/tweet?text=${
-      mensaje + breakLine + getEncodeURL()
+    shareTwitter.href = `https://twitter.com/intent/tweet?url=${getEncodeURL()}&text=${
+      mensaje + breakLine
     }`;
   });
 
